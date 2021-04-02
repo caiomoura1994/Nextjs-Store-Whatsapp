@@ -58,6 +58,9 @@ export const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer;
   }
+  .gradient {
+    background: linear-gradient(270deg, rgba(2,169,166,1) 0%, rgba(91,213,144,1) 75%);
+  }
   ${textClasses}
   ${paddingClasses}
   

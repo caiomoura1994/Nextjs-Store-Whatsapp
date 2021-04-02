@@ -58,14 +58,14 @@ export const CategoriesList: any = styled.div`
 const StoreNavbarStyles = styled.div`
     text-align: center;
     margin-bottom: 2rem;
-    background-image: url("https://i.stack.imgur.com/jRLAt.png");
+    /* background-image: url("https://i.stack.imgur.com/jRLAt.png"); */
     background-repeat: no-repeat;
     background-size: contain;
     background-position-y: 0px;
     .cover {
         width: 100%;
         height: 6rem;
-        background-image: url("https://i.stack.imgur.com/jRLAt.png");
+        /* background-image: url("https://i.stack.imgur.com/jRLAt.png"); */
         background-repeat: no-repeat;
         background-position-x: center;
         background-position-y: center;
@@ -77,7 +77,7 @@ const StoreNavbarStyles = styled.div`
         margin: 1rem;
         border-radius: 50%;
         border-width: 1px;
-        margin-top: 5rem;
+        margin-top: 2rem;
         border: solid;
         border-color: white;
         border-width: 2px;
@@ -175,8 +175,6 @@ const OpenedHoursModalStyle = styled.div`
     width: 100%;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
-    background: rgb(2,169,166);
-    background: linear-gradient(270deg, rgba(2,169,166,1) 0%, rgba(91,213,144,1) 75%);
     color: #fff;
     font-size: 1.5rem;
   }
@@ -205,7 +203,7 @@ export const OpenedHoursModal = ({ toggleModal }) => {
         <span>Sábado</span> <span className="hour">18:00 às 23:00</span>
       </div>
     </div>
-    <div className="center ok-button" onClick={toggleModal}>
+    <div className="center ok-button gradient" onClick={toggleModal}>
       Ok
     </div>
   </OpenedHoursModalStyle>
