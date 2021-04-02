@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import Layout from '../components/layout'
+import useModal from '../components/Modal'
 import ProductCard from '../components/ProductCard'
-import { CategorySectionTitle, ProductList, CategoriesList, StoreNavbar } from '../components/Store'
+import { CategorySectionTitle, ProductList, CategoriesList, StoreNavbar, OpenedHoursModal } from '../components/Store'
 import { getSortedPostsData } from '../lib/posts'
+
+
 const CATEGORIES_MOCK = [
   {
     selected: true,
@@ -20,6 +23,10 @@ const CATEGORIES_MOCK = [
   {
     name: "Kids",
     slug: "kids"
+  },
+  {
+    name: "Test",
+    slug: "test"
   },
 ]
 
@@ -56,31 +63,35 @@ const PRODUCTS_MOCK = [
 
 export default function Home({ allPostsData }) {
   const [selectedSlug, setSelectedSlug] = useState(CATEGORIES_MOCK[0].slug)
+  const [Modal, show, toggle] = useModal(OpenedHoursModal);
   return (
-    <Layout home>
-      <StoreNavbar />
-      <CategoriesList slug={selectedSlug}>
-        {CATEGORIES_MOCK.map(category => <a
-          href={`#${category?.slug}`}
-          key={category?.slug}
-          className={category?.slug}
-          onClick={() => setSelectedSlug(category?.slug)}
-        >
-          <p>{category?.name}</p>
-        </a>
-        )}
-      </CategoriesList>
-      <ProductList>
-        {CATEGORIES_MOCK.map(category => <>
-          <CategorySectionTitle id={category?.slug}>
-            <p>{category.name}</p>
-            <div />
-          </CategorySectionTitle>
-          {PRODUCTS_MOCK.map((product) => <ProductCard {...product} />)}
-        </>
-        )}
-      </ProductList>
-    </Layout>
+    <>
+      {show && <Modal toggleModal={toggle} />}
+      <Layout home>
+        <StoreNavbar toggleModal={toggle} />
+        <CategoriesList show={show} slug={selectedSlug}>
+          {CATEGORIES_MOCK.map(category => <a
+            href={`#${category?.slug}`}
+            key={category?.slug}
+            className={category?.slug}
+            onClick={() => setSelectedSlug(category?.slug)}
+          >
+            <p>{category?.name}</p>
+          </a>
+          )}
+        </CategoriesList>
+        <ProductList>
+          {CATEGORIES_MOCK.map(category => <>
+            <CategorySectionTitle id={category?.slug}>
+              <p>{category.name}</p>
+              <div />
+            </CategorySectionTitle>
+            {PRODUCTS_MOCK.map((product) => <ProductCard {...product} />)}
+          </>
+          )}
+        </ProductList>
+      </Layout>
+    </>
   )
 }
 

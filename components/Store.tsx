@@ -26,7 +26,7 @@ export const ProductList = styled.div`
 export const CategoriesList: any = styled.div`
   overflow: auto;
   white-space: nowrap;
-  position: sticky;
+  position: ${({ show }: any) => !show && "sticky"};
   top: 0;
   left: 0;
   width: 100%;
@@ -55,7 +55,7 @@ export const CategoriesList: any = styled.div`
   }}
 `;
 
-export const StoreNavbarStyles = styled.div`
+const StoreNavbarStyles = styled.div`
     text-align: center;
     margin-bottom: 2rem;
     background-image: url("https://i.stack.imgur.com/jRLAt.png");
@@ -115,14 +115,13 @@ export const StoreNavbarStyles = styled.div`
             padding: 0.2rem;
             vertical-align: 0.1rem;
             margin-left: 0.2rem;
-            transform: rotate(45deg);
-            -webkit-transform: rotate(45deg);
+            /* transform: rotate(45deg); */
+            /* -webkit-transform: rotate(45deg); */
         }
     }
 `;
 
-
-export const StoreNavbar = () => {
+export const StoreNavbar = ({ toggleModal }) => {
   return <StoreNavbarStyles>
     {/* <div className="cover" /> */}
     <img className="avatar" src="https://guiasalvadoronline.com.br/images/usr/227dac6da7.jpg" />
@@ -132,7 +131,83 @@ export const StoreNavbar = () => {
     </div>
     <div className="actions">
       <span className="chip">Fechado</span>
-      <span className="hour">Ver horários <i className="arrow-down"></i></span>
+      <span onClick={toggleModal} className="hour">Ver horários <i className="arrow-down"></i></span>
     </div>
   </StoreNavbarStyles>
+};
+
+const OpenedHoursModalStyle = styled.div`
+  border-radius: 1rem;
+  width: 90%;
+  background: ${({ theme }) => theme.colors.white.DEFAULT};
+  div {
+    font-size: 1rem;
+  }
+  .container {
+    padding: 2rem 1rem;
+  }
+  .center {
+    text-align: center;
+  }
+  .title {
+    margin-bottom: 2rem;
+  }
+  .days-hours {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0.5rem;
+    border: solid;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-color: ${({ theme }) => theme.colors.gray.custom_ecommerce};
+  }
+  .hour {
+    padding: 0.5rem 1rem;
+    border-width: 1px;
+    border: solid;
+    border-color: ${({ theme }) => theme.colors.gray.light};
+    border-radius: 1rem;
+    margin: 0.25rem;
+  }
+  .ok-button {
+    padding: 1rem;
+    width: 100%;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    background: rgb(2,169,166);
+    background: linear-gradient(270deg, rgba(2,169,166,1) 0%, rgba(91,213,144,1) 75%);
+    color: #fff;
+    font-size: 1.5rem;
+  }
+`;
+
+export const OpenedHoursModal = ({ toggleModal }) => {
+  return <OpenedHoursModalStyle>
+    <div className="container">
+      <p className="center title">Horários de Funcionamento</p>
+      <div className="days-hours">
+        <span>Domingo</span> <span className="hour">18:00 às 23:00</span>
+      </div>
+      <div className="days-hours">
+        <span>Terça</span> <span className="hour">18:00 às 21:00</span>
+      </div>
+      <div className="days-hours">
+        <span>Quarta</span> <span className="hour">18:00 às 23:00</span>
+      </div>
+      <div className="days-hours">
+        <span>Quinta</span> <span className="hour">18:00 às 23:00</span>
+      </div>
+      <div className="days-hours">
+        <span>Sexta</span> <span className="hour">18:00 às 23:00</span>
+      </div>
+      <div className="days-hours">
+        <span>Sábado</span> <span className="hour">18:00 às 23:00</span>
+      </div>
+    </div>
+    <div className="center ok-button" onClick={toggleModal}>
+      Ok
+    </div>
+  </OpenedHoursModalStyle>
+
 };

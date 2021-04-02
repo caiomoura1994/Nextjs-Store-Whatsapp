@@ -26,7 +26,7 @@ export const theme: DefaultTheme = {
     },
     gray: {
       DEFAULT: '#BCBCBC',
-      light: '#FCFCFC',
+      light: '#FBFBFB',
       dark: '#707070',
       custom_sending: '#F5F5F5',
       custom_ecommerce: '#AAAAAA'
@@ -42,6 +42,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+    overflow-y: scroll;
   }
   * {
     font-family: 'Open Sans', sans-serif;
