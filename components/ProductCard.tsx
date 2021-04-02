@@ -1,15 +1,16 @@
 import styled from "styled-components"
+import { formatToBRL } from "brazilian-values"
 
-export default function ProductCard({ }) {
+export default function ProductCard({ title, cod, description, price, image }) {
     return <ProductCardContainer>
-        <img src="https://a-static.mlcdn.com.br/618x463/bolsa-feminina-dhaffy-bege-divisorias-alca-de-mao-e-transversal-dhaffy-bolsas/dhaffybolsas/5703861364/1a5bdaa8a82b22de3dc2468583981810.jpg" />
+        <img src={image} />
         <div className="card-body">
             <div>
-                <p className="title">Bolsa de Palha</p>
-                <p className="cod">Cód: 85655</p>
-                <p>Tamanho 50x80 cm</p>
+                <p className="title">{title}</p>
+                {cod && <p className="cod">Cód: {cod}</p>}
+                <p>{description}</p>
             </div>
-            <p className="price">R$ 300,0</p>
+            <p className="price">{formatToBRL(price)}</p>
         </div>
     </ProductCardContainer>
 }
@@ -17,7 +18,7 @@ export default function ProductCard({ }) {
 const ProductCardContainer = styled.div`
     padding: 0.75rem;
     min-height: 8rem;
-    margin: 0.75rem;
+    margin: 1.5rem 0;
     display: flex;
     flex-direction: row;
     border-radius: 10px;

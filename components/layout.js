@@ -14,7 +14,7 @@ import Link from 'next/link'
 export const siteTitle = 'Next.js Sample Website'
 export default function Layout({ children, home }) {
   return (
-    <div>
+    <div style={{ background: "#FCFCFC" }}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
