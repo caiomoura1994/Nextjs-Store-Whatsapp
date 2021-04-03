@@ -60,7 +60,9 @@ export default function ProductPage({ }) {
   }
 
   async function addToCard() {
-    await addItem({ ...PRODUCT_MOCK, aditionals, price: sumAdditionals })
+    const id =  `${Date.now()}-${PRODUCT_MOCK.id}`
+
+    await addItem({ ...PRODUCT_MOCK, aditionals, price: sumAdditionals, id })
     router.back();
   }
 
