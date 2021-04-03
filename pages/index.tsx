@@ -1,8 +1,18 @@
 import { useState } from 'react'
+import { useCart } from 'react-use-cart'
+
 import Layout from '../components/layout'
 import useModal from '../components/Modal'
 import ProductCard from '../components/ProductCard'
-import { CategorySectionTitle, ProductList, CategoriesList, StoreNavbar, OpenedHoursModal } from '../components/Store'
+import {
+  CategorySectionTitle,
+  ProductList,
+  StyledShoppingCart,
+  CategoriesList,
+  StoreNavbar,
+  OpenedHoursModal,
+  FavCartButton
+} from '../components/Store'
 import { getSortedPostsData } from '../lib/posts'
 
 
@@ -64,6 +74,7 @@ const PRODUCTS_MOCK = [
 export default function Home({ allPostsData }) {
   const [selectedSlug, setSelectedSlug] = useState(CATEGORIES_MOCK[0].slug)
   const [Modal, show, toggle] = useModal(OpenedHoursModal);
+  const { totalUniqueItems } = useCart();
   return (
     <>
       {show && <Modal toggleModal={toggle} />}
@@ -90,6 +101,11 @@ export default function Home({ allPostsData }) {
           </>
           )}
         </ProductList>
+
+        {!show && totalUniqueItems > 0 && <FavCartButton onClick={() => alert("Tela de Carrinho")} className="gradient">
+          <StyledShoppingCart />
+          <span>{totalUniqueItems}</span>
+        </FavCartButton>}
       </Layout>
     </>
   )

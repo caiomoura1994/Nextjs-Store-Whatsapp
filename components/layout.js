@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import styled from 'styled-components'
 
 // import Image from 'next/image'
 // <Image
@@ -10,9 +11,14 @@ import Link from 'next/link'
 //   width={144}
 //   alt={name}
 // />
+const BackButton = styled.div`
+  font-size: 1rem;
+  color: #707070;
+  margin: 1rem;
+`;
 
 export const siteTitle = 'Next.js Sample Website'
-export default function Layout({ children, home }) {
+export default function Layout({ children, home = false }) {
   return (
     <div style={{ background: "#FCFCFC" }}>
       <Head>
@@ -31,14 +37,14 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header></header>
-      <main>{children}</main>
       {!home && (
-        <div>
+        <BackButton>
           <Link href="/">
-            <a>← Back to home</a>
+            <a>← Voltar</a>
           </Link>
-        </div>
+        </BackButton>
       )}
+      <main>{children}</main>
     </div>
   )
 }

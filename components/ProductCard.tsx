@@ -1,8 +1,9 @@
+import Link from 'next/link'
 import styled from "styled-components"
 import { formatToBRL } from "brazilian-values"
 
-export default function ProductCard({ title, cod, description, price, image }) {
-    return <ProductCardContainer>
+export default function ProductCard({ title, cod, description, price, image, slug = "test" }) {
+    return <Link href={`/product/${slug}`}><ProductCardContainer>
         <img src={image} />
         <div className="card-body">
             <div>
@@ -13,6 +14,7 @@ export default function ProductCard({ title, cod, description, price, image }) {
             <p className="price">{formatToBRL(price)}</p>
         </div>
     </ProductCardContainer>
+    </Link>
 }
 
 const ProductCardContainer = styled.div`

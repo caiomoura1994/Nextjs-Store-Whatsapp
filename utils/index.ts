@@ -29,7 +29,7 @@ export const theme: DefaultTheme = {
       light: '#FBFBFB',
       dark: '#707070',
       custom_sending: '#F5F5F5',
-      custom_ecommerce: '#AAAAAA'
+      custom_ecommerce: '#cacaca'
     },
     white: {
       DEFAULT: '#FFFFFF'
@@ -51,6 +51,26 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     scroll-behavior: smooth;
   }
+  .badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
+
+  .label-warning[href],
+  .badge-warning[href] {
+    background-color: #c67605;
+  }
+  #lblCartCount {
+      font-size: 12px;
+      background: #ff0000;
+      color: #fff;
+      padding: 0 5px;
+      vertical-align: top;
+      margin-left: -10px; 
+  }
   a {
     color: inherit;
     text-decoration: none;
@@ -60,6 +80,17 @@ export const GlobalStyle = createGlobalStyle`
   }
   .gradient {
     background: linear-gradient(270deg, rgba(2,169,166,1) 0%, rgba(91,213,144,1) 75%);
+  }
+  .gradient-color {
+    background: -webkit-linear-gradient(270deg, rgba(2,169,166,1) 0%, rgba(91,213,144,1) 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .flex {
+    display: flex;
+  }
+  .justify-space-between {
+    justify-content: space-between;
   }
   ${textClasses}
   ${paddingClasses}
