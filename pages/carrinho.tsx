@@ -2,10 +2,13 @@ import styled from 'styled-components';
 import Link from 'next/link'
 import Layout from '../components/layout'
 import { StyledShoppingCart } from '../components/Store';
+import ShippingForm from '../components/ShippingForm';
 import CheckboxUi from '../components/ui/Checkbox';
+import { useState } from 'react';
 
 
 export default function ProductPage({ }) {
+  const [shippigType, setShippigType] = useState("");
   return (
     <Layout>
       <CartTitle>
@@ -49,18 +52,26 @@ export default function ProductPage({ }) {
       <ShippingSection>
         <h2>Entrega</h2>
         <CheckboxUi
-          onClick={() => { }}
-          text="Entregar no meu endereço"
+          onClick={() => setShippigType("pickInStore")}
+          text="Retirar na loja"
+          isChecked={shippigType === "pickInStore"}
         />
         <CheckboxUi
-          onClick={() => { }}
-          text="Retirar na loja"
+          onClick={() => setShippigType("address")}
+          text="Entregar no meu endereço"
+          isChecked={shippigType === "address"}
         />
+        {
+          shippigType === "address" && <ShippingForm />
+        }
         <Link href="/">
-          <a>{"Continue a comprar"}</a>
+          <a>Continue a comprar</a>
         </Link>
       </ShippingSection>
-      <FinishOrderButton className="gradient flex justify-center">
+      <FinishOrderButton
+        onClick={() => open("https://api.whatsapp.com/send/?phone=5571988362338&text&app_absent=0")}
+        className="gradient flex justify-center"
+      >
         Fechar Pedido R$1080,00
       </FinishOrderButton>
     </Layout>
@@ -87,7 +98,7 @@ const CartTitle = styled.section`
 
 const ShippingSection = styled.section`
   margin: 1rem;
-  margin-bottom: 10rem;
+  padding-bottom: 10rem;
   color: ${({ theme }) => theme.colors.gray.dark};
   h2 {
     font-weight: 400;

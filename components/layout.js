@@ -14,13 +14,16 @@ import styled from 'styled-components'
 const BackButton = styled.div`
   font-size: 1rem;
   color: #707070;
-  margin: 1rem;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  background: white;
 `;
 
 export const siteTitle = 'Next.js Sample Website'
 export default function Layout({ children, home = false, goBackAction = () => { } }) {
   return (
-    <div style={{ background: "#FCFCFC" }}>
+    <div style={{ background: "#FCFCFC", maxWidth: 500,     margin: "auto" }}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
