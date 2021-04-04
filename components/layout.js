@@ -18,7 +18,7 @@ const BackButton = styled.div`
 `;
 
 export const siteTitle = 'Next.js Sample Website'
-export default function Layout({ children, home = false }) {
+export default function Layout({ children, home = false, goBackAction = () => { } }) {
   return (
     <div style={{ background: "#FCFCFC" }}>
       <Head>
@@ -39,8 +39,8 @@ export default function Layout({ children, home = false }) {
       <header></header>
       {!home && (
         <BackButton>
-          <Link href="/">
-            <a>← Voltar</a>
+          <Link href="/" onClick={goBackAction}>
+            <a>{"< Voltar"}</a>
           </Link>
         </BackButton>
       )}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatToBRL } from 'brazilian-values';
 import { useRouter } from 'next/router'
 
@@ -35,39 +35,71 @@ const ADITIONALS = [
 
 export default function ProductPage({ }) {
   const router = useRouter()
-
+  const [productId, setProductId] = useState("");
+  const [comment, setComment] = useState("");
   const [aditionals, setAditionals] = useState(ADITIONALS);
-  const sumAdditionals = aditionals.map(d => d.checked && d.price || 0).reduce((ad, currentValue) => ad + currentValue)
   const {
-    // isEmpty,
     // totalUniqueItems,
     // totalItems,
     // items,
-    // updateItemQuantity,
+    updateItemQuantity,
     addItem,
+    getItem,
+    updateItem
   } = useCart();
-  // console.log("totalUniqueItems", totalUniqueItems)
-  // console.log("totalItems", totalItems)
-  // console.log("items", items)
+  const sumAdditionals = aditionals.map(d => d.checked && d.price || 0).reduce((ad, currentValue) => ad + currentValue)
+  const itemProduct = getItem(productId);
+
+  useEffect(() => {
+    setProductId(`${Date.now()}-${PRODUCT_MOCK.id}`)
+  }, []);
+
   function handleWithAditionals(aditionalIndex, status) {
     const multable = aditionals;
-    console.log(multable)
     multable[aditionalIndex] = {
       ...aditionals[aditionalIndex],
       checked: !status
     }
     setAditionals([...multable])
+    itemProduct && updateItem(itemProduct.id, {
+      ...itemProduct,
+      aditionals: multable,
+      comment
+    })
   }
 
   async function addToCard() {
-    const id =  `${Date.now()}-${PRODUCT_MOCK.id}`
-
-    await addItem({ ...PRODUCT_MOCK, aditionals, price: sumAdditionals, id })
     router.back();
   }
 
+  async function removeCartItem() {
+    itemProduct && updateItemQuantity(productId, itemProduct?.quantity - 1)
+  }
+
+  function addCartItem() {
+    if (itemProduct) {
+      updateItemQuantity(productId, itemProduct?.quantity + 1)
+    } else {
+      addItem({
+        ...PRODUCT_MOCK,
+        aditionals,
+        price: sumAdditionals + PRODUCT_MOCK.price,
+        id: productId,
+        comment
+      })
+    }
+  }
+
+  function goBackAction() {
+    // params
+    return ""
+  }
+
+  function handleChangeComment(event) {
+    setComment(event.target.value)
+  }
   return (
-    <Layout>
+    <Layout goBackAction={goBackAction}>
       <ProductContainer>
         <HeaderSection>
           <img src={PRODUCT_MOCK.image} />
@@ -91,16 +123,20 @@ export default function ProductPage({ }) {
         </section>
         <div className="section-title">Algum comentário?</div>
         <section>
-          <textarea placeholder="Ex: Remover maionese.">
+          <textarea onChange={handleChangeComment} placeholder="Ex: Remover maionese.">
           </textarea>
           <ActionContainer>
-            {/* <div className="flex counter">
-              <div><label className="gradient-color">-</label></div>
-              <span>{totalUniqueItems}</span>
-              <div onClick={() => addItem({ ...PRODUCT_MOCK, aditionals })}><label className="gradient-color">+</label></div>
-            </div> */}
+            <div className="flex counter">
+              <div onClick={removeCartItem}>
+                <label className="gradient-color">-</label>
+              </div>
+              <span>{itemProduct?.quantity || 0}</span>
+              <div onClick={addCartItem}>
+                <label className="gradient-color">+</label>
+              </div>
+            </div>
             <div onClick={addToCard} className="gradient add-button">
-              Adicionar {formatToBRL(sumAdditionals + PRODUCT_MOCK.price)}
+              Adicionar {formatToBRL((itemProduct?.quantity || 0) * (sumAdditionals + PRODUCT_MOCK.price))}
             </div>
           </ActionContainer>
         </section>
@@ -167,7 +203,7 @@ const ProductContainer = styled.div`
     border-radius: 3rem;
     align-self: center;
     width: 100%;
-    margin-bottom: 1rem;
+    margin-left: 1rem;
   }
 
   .counter {

@@ -24,8 +24,8 @@ export const ProductList = styled.div`
 `;
 
 export const FavCartButton = styled.div`
-  height: 60px;
-  width: 60px;
+  height: 3rem;
+  width: 3rem;
   position: fixed;
   bottom: 1rem;
   right: 1rem;
