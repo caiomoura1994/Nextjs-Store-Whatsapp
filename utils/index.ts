@@ -92,6 +92,9 @@ export const GlobalStyle = createGlobalStyle`
   .justify-space-between {
     justify-content: space-between;
   }
+  .justify-center {
+    justify-content: center;
+  }
   ${textClasses}
   ${paddingClasses}
   

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useCart } from 'react-use-cart'
+import Link from 'next/link'
 
 import Layout from '../components/layout'
 import useModal from '../components/Modal'
@@ -101,11 +102,13 @@ export default function Home({ allPostsData }) {
           </>
           )}
         </ProductList>
-
-        {!show && totalUniqueItems > 0 && <FavCartButton onClick={() => alert("Tela de Carrinho")} className="gradient">
-          <StyledShoppingCart />
-          <span>{totalUniqueItems}</span>
-        </FavCartButton>}
+        {!show && totalUniqueItems > 0 && <Link href="/carrinho">
+          <FavCartButton className="gradient">
+            <StyledShoppingCart />
+            <span>{totalUniqueItems}</span>
+          </FavCartButton>
+        </Link>
+        }
       </Layout>
     </>
   )
