@@ -42,6 +42,7 @@ export default function ProductPage({ }) {
     // totalUniqueItems,
     // totalItems,
     // items,
+    removeItem,
     updateItemQuantity,
     addItem,
     getItem,
@@ -52,6 +53,7 @@ export default function ProductPage({ }) {
 
   useEffect(() => {
     setProductId(`${Date.now()}-${PRODUCT_MOCK.id}`)
+    setTimeout(addCartItem, 1000);
   }, []);
 
   function handleWithAditionals(aditionalIndex, status) {
@@ -91,8 +93,7 @@ export default function ProductPage({ }) {
   }
 
   function goBackAction() {
-    // params
-    return ""
+    removeItem(productId);
   }
 
   function handleChangeComment(event) {
@@ -102,7 +103,7 @@ export default function ProductPage({ }) {
     <Layout goBackAction={goBackAction}>
       <ProductContainer>
         <HeaderSection>
-          <img src={PRODUCT_MOCK.image} />
+          <img alt="image" src={PRODUCT_MOCK.image} />
           <div>
             <h1>{PRODUCT_MOCK.title}</h1>
             <p>Cód: {PRODUCT_MOCK.cod}</p>

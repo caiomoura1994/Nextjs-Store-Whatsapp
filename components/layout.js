@@ -43,7 +43,7 @@ export default function Layout({ children, home = false, goBackAction = () => { 
       {!home && (
         <BackButton>
           <Link href="/" onClick={goBackAction}>
-            <a>{"< Voltar"}</a>
+            <a>{"Voltar"}</a>
           </Link>
         </BackButton>
       )}

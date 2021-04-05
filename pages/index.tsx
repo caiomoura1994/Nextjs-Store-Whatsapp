@@ -93,13 +93,13 @@ export default function Home({ allPostsData }) {
           )}
         </CategoriesList>
         <ProductList>
-          {CATEGORIES_MOCK.map(category => <>
+          {CATEGORIES_MOCK.map(category => <div key={category.slug}>
             <CategorySectionTitle id={category?.slug}>
               <p>{category.name}</p>
               <div />
             </CategorySectionTitle>
-            {PRODUCTS_MOCK.map((product) => <ProductCard {...product} />)}
-          </>
+            {PRODUCTS_MOCK.map((product) => <ProductCard key={product.title} {...product} />)}
+          </div>
           )}
         </ProductList>
         {!show && totalUniqueItems > 0 && <Link href="/carrinho">

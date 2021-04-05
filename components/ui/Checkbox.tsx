@@ -60,11 +60,11 @@ input:checked ~ .checkmark:after {
   transform: rotate(45deg);
 }
 `;
-export default function CheckboxUi({ text, isChecked = false, onClick }) {
+export default function CheckboxUi({ text, isChecked = false, onClick, onChange = () => { } }) {
   return (
     <Styles className="container">
       {text}
-      <input type="checkbox" checked={isChecked} onClick={onClick} />
+      <input type="checkbox" checked={isChecked} onClick={onClick} onChange={onChange} />
       <span className="checkmark"></span>
     </Styles>
   )

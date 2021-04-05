@@ -184,7 +184,7 @@ const StoreNavbarStyles = styled.div`
 export const StoreNavbar = ({ toggleModal }) => {
   return <StoreNavbarStyles>
     {/* <div className="cover" /> */}
-    <img className="avatar" src="https://guiasalvadoronline.com.br/images/usr/227dac6da7.jpg" />
+    <img alt="image" className="avatar" src="https://guiasalvadoronline.com.br/images/usr/227dac6da7.jpg" />
     <div className="title">
       <h1>MOOI Modas</h1>
       <h2>Moda para todxs.</h2>

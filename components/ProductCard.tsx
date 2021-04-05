@@ -4,7 +4,7 @@ import { formatToBRL } from "brazilian-values"
 
 export default function ProductCard({ title, cod, description, price, image, slug = "test" }) {
     return <Link href={`/product/${slug}`}><ProductCardContainer>
-        <img src={image} />
+        <img alt="image" src={image} />
         <div className="card-body">
             <div>
                 <p className="title">{title}</p>
