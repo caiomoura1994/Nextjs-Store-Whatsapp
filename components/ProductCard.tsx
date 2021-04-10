@@ -1,14 +1,15 @@
 import Link from 'next/link'
 import styled from "styled-components"
 import { formatToBRL } from "brazilian-values"
+import { IProduct } from '../@types/store';
 
-export default function ProductCard({ title, cod, description, price, image, slug = "test" }) {
+export default function ProductCard({ name, description, price, photo, slug = "test" }: IProduct) {
     return <Link href={`/product/${slug}`}><ProductCardContainer>
-        <img alt="image" src={image} />
+        <img alt="image" src={photo} />
         <div className="card-body">
             <div>
-                <p className="title">{title}</p>
-                {cod && <p className="cod">Cód: {cod}</p>}
+                <p className="title">{name}</p>
+                {/* {cod && <p className="cod">Cód: {cod}</p>} */}
                 <p>{description}</p>
             </div>
             <p className="price">{formatToBRL(price)}</p>
