@@ -31,6 +31,7 @@ const ProductCardContainer = styled.div`
     img {
         width: 6rem;
         height: 7.5rem;
+        object-fit: cover;
     }
     .title {
         font-size: 1rem;
