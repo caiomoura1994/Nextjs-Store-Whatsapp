@@ -4,6 +4,7 @@ export interface ICategory {
     created_at: Date;
     updated_at: Date;
     store: number;
+    products?: IProduct[];
 }
 
 export interface IProduct {
@@ -43,7 +44,7 @@ export interface IOpeninghour {
 export interface IStore {
     id: number;
     categories: ICategory[];
-    products: IProduct[];
+    products?: IProduct[];
     address: IAddress;
     openinghours: IOpeninghour[];
     establishment_name: string;

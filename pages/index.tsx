@@ -14,10 +14,14 @@ import {
   StoreNavbar,
   StyledShoppingCart,
 } from '../components/Store'
+import ProductApi from '../services/ProductApi'
 import StoreApi from '../services/StoreApi'
 
+interface HomeProps {
+  storeData: IStore
+}
 
-export default function Home({ storeData }: { storeData: IStore }) {
+export default function Home({ storeData }: HomeProps) {
   const [selectedCategorySlug, setSelectedCategorySlug] = useState(storeData.categories[0].id)
   const [Modal, show, toggle] = useModal(OpenedHoursModal);
   const { totalUniqueItems } = useCart();
@@ -43,7 +47,7 @@ export default function Home({ storeData }: { storeData: IStore }) {
               <p>{category.name}</p>
               <div />
             </CategorySectionTitle>
-            {storeData?.products?.map((product) => <ProductCard key={product?.id} {...product} />)}
+            {category?.products?.map((product) => <ProductCard key={product?.id} {...product} />)}
           </div>
           )}
         </ProductList>
@@ -60,10 +64,23 @@ export default function Home({ storeData }: { storeData: IStore }) {
 }
 
 export async function getStaticProps() {
-  const storeData = await StoreApi.getBySlug("pastello");
+  const storeData: Partial<IStore> = await StoreApi.getBySlug("pastello");
+  const categoriesWithProducts = await Promise.all(
+    storeData?.categories?.map(async category => {
+      const products = await ProductApi.listByCategory(String(category?.id))
+      return {
+        ...category,
+        products
+      }
+    })
+  )
+
   return {
     props: {
-      storeData
+      storeData: {
+        ...storeData,
+        categories: categoriesWithProducts
+      },
     }
   }
 }

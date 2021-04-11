@@ -147,7 +147,13 @@ export default function ProductPage(props: IProduct) {
 
 
 export async function getStaticPaths() {
-  return { paths: [{ params: { id: "2" } }], fallback: false }
+  return {
+    paths: [
+      { params: { id: "2" } },
+      { params: { id: "1" } }
+    ],
+    fallback: false
+  }
 }
 
 export async function getStaticProps({ params }) {
