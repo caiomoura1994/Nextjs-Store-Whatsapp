@@ -98,8 +98,14 @@ export default function ProductPage(props: IProduct) {
   function handleChangeComment(event) {
     setComment(event.target.value)
   }
+
+  const goBackAction = () => {
+    removeItem(productId);
+    setAditionals(ADITIONALS);
+  }
+
   return (
-    <Layout goBackAction={() => removeItem(productId)}>
+    <Layout goBackAction={goBackAction}>
       <ProductDetailUi.ProductContainer>
         <ProductDetailUi.HeaderSection>
           <img alt="image" src={props.photo} />

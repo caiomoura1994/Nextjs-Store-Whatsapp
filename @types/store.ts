@@ -21,6 +21,12 @@ export interface IProduct {
     categories: number[];
 }
 
+export interface IAditional {
+    id: number;
+    title: string;
+    price: number;
+}
+
 export interface IAddress {
     id: number;
     zip_code: string;

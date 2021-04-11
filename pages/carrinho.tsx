@@ -6,21 +6,18 @@ import CheckboxUi from '../components/ui/Checkbox';
 import CarrinhoUi from '../components/pages/carrinhoUi';
 import { useState } from 'react';
 import { useCart } from 'react-use-cart';
-import ProductApi from '../services/ProductApi';
-
-
+import { useRouter } from 'next/router';
+import { IItemProduct } from '../@types/cart';
+import { formatToBRL } from "brazilian-values"
 
 export default function ProductPage({ }) {
   const [shippigType, setShippigType] = useState("");
+  const { back } = useRouter()
   const {
-    totalUniqueItems,
-    totalItems,
     items,
-    removeItem,
     updateItemQuantity,
-    addItem,
     getItem,
-    updateItem
+    isEmpty
   } = useCart();
 
   async function removeCartItem(productId, itemProduct) {
@@ -30,51 +27,77 @@ export default function ProductPage({ }) {
   function addCartItem(productId, itemProduct) {
     updateItemQuantity(productId, itemProduct?.quantity + 1)
   }
+
+  if (isEmpty) {
+    return (
+      <Layout>
+        <CarrinhoUi.CartTitle>
+          <StyledShoppingCart />
+          <h1>Carrinho</h1>
+        </CarrinhoUi.CartTitle>
+        <h2>Seu carrinho está vazio</h2>
+        <CarrinhoUi.FinishOrderButton onClick={back} className="gradient flex justify-center">
+          Voltar para loja
+        </CarrinhoUi.FinishOrderButton>
+      </Layout>
+    )
+  }
+
+  const products: IItemProduct[] = items?.map(product => {
+    const itemProduct = getItem(product?.id);
+    const checkedAditionals = itemProduct?.aditionals?.filter((aditional) => aditional?.checked)
+    const subTotalValue = (itemProduct?.quantity * itemProduct?.sumAdditionals) + Number(itemProduct?.itemTotal);
+    return {
+      ...itemProduct,
+      checkedAditionals,
+      subTotalValue,
+      itemProduct
+    }
+  })
+  const totalCart = products.map(p => p.subTotalValue).reduce((accumulator, currentValue) => accumulator + currentValue)
+
   return (
     <Layout>
       <CarrinhoUi.CartTitle>
         <StyledShoppingCart />
         <h1>Carrinho</h1>
       </CarrinhoUi.CartTitle>
-      {items?.map(product => {
-        const itemProduct = getItem(product?.id);
-        console.log(itemProduct)
-        const checkedAditionals = itemProduct?.aditionals?.filter((aditional) => aditional?.checked)
-        return (
+      {
+        products?.map(product => (
           <CarrinhoUi.ProductCardCartContainer key={product.id}>
             <div className="action-buttons">
-              <div onClick={() => addCartItem(product.id, itemProduct)}>
+              <div onClick={() => addCartItem(product.id, product.itemProduct)}>
                 <label className="gradient-color">+</label>
               </div>
               <span>{product?.quantity}</span>
-              <div onClick={() => removeCartItem(product.id, itemProduct)}>
+              <div onClick={() => removeCartItem(product.id, product.itemProduct)}>
                 <label className="gradient-color">-</label>
               </div>
             </div>
             <div className="orderDetail">
               <div className="flex justify-space-between product">
-                <label>{itemProduct?.name}</label>
-                <label>{itemProduct?.itemTotal}</label>
+                <label>{product.itemProduct?.name}</label>
+                <label>{formatToBRL(product.itemProduct?.itemTotal)}</label>
               </div>
-              {checkedAditionals?.map((aditional) => (
+              {product.checkedAditionals?.map((aditional) => (
                 <div key={aditional?.id} className="flex justify-space-between additionals">
                   <label>{aditional?.title}</label>
-                  <label>{aditional?.price}</label>
+                  <label>{formatToBRL(aditional?.price)}</label>
                 </div>
               ))}
-              {!checkedAditionals?.length && <br />}
+              {!product.checkedAditionals?.length && <br />}
 
               <div className="flex justify-space-between subtotal">
                 <label>Subtotal</label>
-                <label className="value">{(itemProduct?.quantity * itemProduct?.sumAdditionals) + Number(itemProduct?.itemTotal)}</label>
+                <label className="value">{formatToBRL(product.subTotalValue)}</label>
               </div>
               <div className="edit-comment">
                 <label>Editar</label>
               </div>
             </div>
           </CarrinhoUi.ProductCardCartContainer>
-        )
-      })}
+        ))
+      }
       <CarrinhoUi.ShippingSection>
         <h2>Entrega</h2>
         <CheckboxUi
@@ -98,7 +121,7 @@ export default function ProductPage({ }) {
         onClick={() => open("https://api.whatsapp.com/send/?phone=5571988362338&text&app_absent=0")}
         className="gradient flex justify-center"
       >
-        Fechar Pedido R$1080,00
+        Fechar Pedido {formatToBRL(totalCart)}
       </CarrinhoUi.FinishOrderButton>
     </Layout>
   )
