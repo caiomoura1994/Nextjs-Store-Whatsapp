@@ -41,8 +41,8 @@ export default function Layout({ children, home = false, goBackAction = () => { 
       </Head>
       <header></header>
       {!home && (
-        <BackButton>
-          <Link href="/" onClick={goBackAction}>
+        <BackButton onClick={goBackAction}>
+          <Link href="/">
             <a>{"Voltar"}</a>
           </Link>
         </BackButton>

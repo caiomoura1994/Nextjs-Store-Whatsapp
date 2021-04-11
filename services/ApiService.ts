@@ -1,9 +1,7 @@
 import { AxiosInstance } from "axios";
 import apiClient from ".";
 
-const handleSuccess = (response) => {
-  return response;
-}
+const handleSuccess = (response) => response;
 
 const redirectTo = (document, path) => {
   document.location = path

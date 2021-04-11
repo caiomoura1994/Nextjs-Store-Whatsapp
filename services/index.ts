@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://zapei-api.herokuapp.com",
+  baseURL: "https://zapei-api.herokuapp.com",
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',

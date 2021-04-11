@@ -3,8 +3,8 @@ import styled from "styled-components"
 import { formatToBRL } from "brazilian-values"
 import { IProduct } from '../@types/store';
 
-export default function ProductCard({ name, description, price, photo, slug = "test" }: IProduct) {
-    return <Link href={`/product/${slug}`}><ProductCardContainer>
+export default function ProductCard({ name, description, price, photo, id }: IProduct) {
+    return <Link href={`/product/${id}`}><ProductCardContainer>
         <img alt="image" src={photo} />
         <div className="card-body">
             <div>

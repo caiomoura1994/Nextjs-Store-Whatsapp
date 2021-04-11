@@ -43,7 +43,7 @@ export default function Home({ storeData }: { storeData: IStore }) {
               <p>{category.name}</p>
               <div />
             </CategorySectionTitle>
-            {storeData?.products?.map((product) => <ProductCard key={product?.slug} {...product} />)}
+            {storeData?.products?.map((product) => <ProductCard key={product?.id} {...product} />)}
           </div>
           )}
         </ProductList>
