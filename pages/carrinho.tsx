@@ -12,7 +12,7 @@ import { formatToBRL } from "brazilian-values"
 
 export default function ProductPage({ }) {
   const [shippigType, setShippigType] = useState("");
-  const { back } = useRouter()
+  const { back, push } = useRouter()
   const {
     items,
     updateItemQuantity,
@@ -35,7 +35,7 @@ export default function ProductPage({ }) {
           <StyledShoppingCart />
           <h1>Carrinho</h1>
         </CarrinhoUi.CartTitle>
-        <h2>Seu carrinho está vazio</h2>
+        <h2 className="text-center">Seu carrinho está vazio</h2>
         <CarrinhoUi.FinishOrderButton onClick={back} className="gradient flex justify-center">
           Voltar para loja
         </CarrinhoUi.FinishOrderButton>
@@ -91,7 +91,7 @@ export default function ProductPage({ }) {
                 <label>Subtotal</label>
                 <label className="value">{formatToBRL(product.subTotalValue)}</label>
               </div>
-              <div className="edit-comment">
+              <div onClick={() => push(`product/${product?.id}/edit`)} className="edit-comment">
                 <label>Editar</label>
               </div>
             </div>

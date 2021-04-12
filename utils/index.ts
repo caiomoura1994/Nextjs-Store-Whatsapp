@@ -95,6 +95,9 @@ export const GlobalStyle = createGlobalStyle`
   .justify-center {
     justify-content: center;
   }
+  .text-center {
+    text-align: center;
+  }
   ${textClasses}
   ${paddingClasses}
   

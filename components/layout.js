@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 import styled from 'styled-components'
 
 // import Image from 'next/image'
@@ -22,8 +23,9 @@ const BackButton = styled.div`
 
 export const siteTitle = 'Next.js Sample Website'
 export default function Layout({ children, home = false, goBackAction = () => { } }) {
+  const router = useRouter();
   return (
-    <div style={{ background: "#FCFCFC", maxWidth: 500,     margin: "auto" }}>
+    <div style={{ background: "#FCFCFC", maxWidth: 500, margin: "auto" }}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -41,10 +43,11 @@ export default function Layout({ children, home = false, goBackAction = () => { 
       </Head>
       <header></header>
       {!home && (
-        <BackButton onClick={goBackAction}>
-          <Link href="/">
-            <a>{"Voltar"}</a>
-          </Link>
+        <BackButton onClick={() => {
+          goBackAction()
+          router.back();
+        }}>
+          <a>{"Voltar"}</a>
         </BackButton>
       )}
       <main>{children}</main>
