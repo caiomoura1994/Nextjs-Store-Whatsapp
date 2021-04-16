@@ -1,15 +1,31 @@
 import Input from "./ui/Input"
+import { UseFormReturn } from "react-hook-form";
 
+type ShippingFormType = {
+  formContext: UseFormReturn;
+  onSubmit?: () => void;
+}
+export default function ShippingForm({ formContext, onSubmit }: ShippingFormType) {
+  const { register, handleSubmit, watch } = formContext;
 
-export default function ShippingForm() {
+  const [
+    street,
+    city,
+    neigbohood
+  ] = watch([
+    'street',
+    'city',
+    'neigbohood'
+  ])
   return (
-    <form style={{ margin: "0 2rem 1rem" }}>
-      <Input id="cep" label="CEP" />
-      <Input id="street" label="Rua/Av" />
-      <Input id="neigbohood" label="Bairro" />
-      <Input id="number" label="Número" />
-      <Input id="complement" label="Complemento" />
-      <Input id="city" label="Cidade" />
+    <form onSubmit={handleSubmit(onSubmit)} style={{ margin: "0 2rem 1rem" }}>
+      {/* {errors.exampleRequired && <span>This field is required</span>} */}
+      <Input {...register("cep", { required: true })} id="cep" label="CEP*" />
+      <Input value={street} {...register("street")} id="street" label="Rua/Av*" />
+      <Input value={city} {...register("city")} id="city" label="Cidade*" />
+      <Input value={neigbohood} {...register("neigbohood")} id="neigbohood" label="Bairro*" />
+      <Input {...register("complement")} id="complement" label="Complemento" />
+      <Input {...register("number", { required: true })} id="number" label="Número*" />
     </form>
   )
 }

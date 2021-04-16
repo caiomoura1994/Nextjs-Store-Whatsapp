@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FinishOrderButton = styled.section`
+const FinishOrderButton = styled.div`
 color: white;
 padding: 1.5rem;
 font-size: 1.25rem;

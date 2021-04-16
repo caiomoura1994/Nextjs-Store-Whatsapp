@@ -1,6 +1,7 @@
-import styled from "styled-components"
+import { forwardRef } from "react";
+import styled, { css } from "styled-components";
 
-const StyledInputContainer = styled.div`
+const StyledInputContainer = styled.div<any>`
   position: relative;
   width: 100%;
   height: 4rem;
@@ -28,11 +29,14 @@ const StyledInputContainer = styled.div`
     color: #111;
     border-radius: 0.5rem;
   }
-  input:invalid {
-    outline: 0;
-    color: #ff2300;
-    border-color: #ff2300;
-  }
+
+  ${({ errors }) => errors && css`
+    input {
+      outline: 0;
+      color: #ff2300;
+      border-color: #ff2300;
+    }
+  `}
   input:focus~label,
   input:valid~label {
     font-size: 1rem; 
@@ -42,12 +46,20 @@ const StyledInputContainer = styled.div`
   }
 `;
 
+const Error = styled.span`
+  color: #ff2300;
+`;
 
-export default function Input({ label, isRequired = false, id, ...props }) {
+function Input({ label, isRequired = false, id, showError, ...props }) {
   return (
-    <StyledInputContainer>
-      <input placeholder={label} type="text" id={id} required={isRequired} {...props} />
-      {/* <label htmlFor={id}>{label}</label> */}
-    </StyledInputContainer>
+    <>
+      <StyledInputContainer errors={showError}>
+        <input placeholder={label} type="text" id={id} required={isRequired} {...props} />
+        {/* <label htmlFor={id}>{label}</label> */}
+      </StyledInputContainer>
+      <Error>{showError && `${label} é obrigatório.`}</Error>
+    </>
   )
 }
+
+export default forwardRef(Input)
