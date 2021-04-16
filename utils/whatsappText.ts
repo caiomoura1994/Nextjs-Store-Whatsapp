@@ -1,21 +1,13 @@
 import { formatToBRL, formatToDateTime } from "brazilian-values";
 
 export const generateWhatsappText = ({
-    name,
-    phone,
     total,
-    cep,
-    city,
-    complement,
-    neigbohood,
-    number,
-    street,
-    uf,
-    products
+    products,
+    ...props
 }) => {
-    const formattedAddress = `${street}, ${number} - ${complement}
-${neigbohood}, ${city}/${uf}
-${cep}`;
+    const formattedAddress = `${props.street}, ${props.number} - ${props.complement}
+${props.neigbohood}, ${props.city}/${props.uf}
+${props.cep}`;
 
     const formattedProducts = products.map((product) => {
         let formattedAdditionals = '';
@@ -35,8 +27,8 @@ ${formattedProducts}
 *Total: ${total}*
 
 ---------------------------------------
-*${name}*
-${phone}
+*${props.name}*
+${props.phone}
 
 ${formattedAddress}
 
