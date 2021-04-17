@@ -4,17 +4,18 @@ import { formatToBRL } from "brazilian-values"
 import { IProduct } from '../@types/store';
 
 export default function ProductCard({ name, description, price, photo, id }: IProduct) {
-    return <Link href={`/product/${id}`}><ProductCardContainer>
-        <img alt="image" src={photo} />
-        <div className="card-body">
-            <div>
-                <p className="title">{name}</p>
-                {/* {cod && <p className="cod">Cód: {cod}</p>} */}
-                <p>{description}</p>
+    return <Link href={`/product/detail/${id}`}>
+        <ProductCardContainer>
+            <img alt="image" src={photo} />
+            <div className="card-body">
+                <div>
+                    <p className="title">{name}</p>
+                    {/* {cod && <p className="cod">Cód: {cod}</p>} */}
+                    <p>{description}</p>
+                </div>
+                <p className="price">{formatToBRL(price)}</p>
             </div>
-            <p className="price">{formatToBRL(price)}</p>
-        </div>
-    </ProductCardContainer>
+        </ProductCardContainer>
     </Link>
 }
 

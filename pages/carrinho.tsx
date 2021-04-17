@@ -24,6 +24,8 @@ export default function ProductPage({ }) {
     isEmpty
   } = useCart();
   const formContext = useForm();
+  console.log(formContext?.formState)
+  console.log(formContext?.formState.errors)
 
   if (isEmpty) {
     return (
@@ -119,7 +121,7 @@ export default function ProductPage({ }) {
                 <label>Subtotal</label>
                 <label className="value">{formatToBRL(product.subTotalValue)}</label>
               </div>
-              <div onClick={() => push(`product/${product?.id}/edit`)} className="edit-comment">
+              <div onClick={() => push(`product/edit/${product?.id}`)} className="edit-comment">
                 <label>Editar</label>
               </div>
             </div>

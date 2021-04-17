@@ -131,3 +131,16 @@ export default function ProductPage() {
     </Layout>
   )
 }
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: false
+  }
+}
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  }
+}
