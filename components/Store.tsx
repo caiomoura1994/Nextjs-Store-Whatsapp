@@ -84,7 +84,7 @@ export const StyledShoppingCart = styled.i`
 
 export const CategoriesList: any = styled.div`
   overflow: auto;
-  padding: 0.75rem 0;
+  /* padding: 0.25rem 0; */
   white-space: nowrap;
   position: ${({ show }: any) => !show && "sticky"};
   top: 0;

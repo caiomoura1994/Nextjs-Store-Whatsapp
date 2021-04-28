@@ -1,11 +1,15 @@
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 import Layout from '../components/layout'
 
 export default function Home() {
-  // window.location.href = "https://zapei.com.br/"
+  const { push } = useRouter()
+  useEffect(() => {
+    push("https://www.zapei.com.br/loja")
+  }, [])
   return (
     <Layout home>
-      Home
+
     </Layout>
   )
 }

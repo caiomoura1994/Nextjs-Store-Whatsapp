@@ -7,7 +7,7 @@ class ProductApi extends ApiService {
     return data
   }
   
-  async listByCategory(categoryId: string): Promise<Partial<IProduct>> {
+  async listByCategory(categoryId: string): Promise<Partial<IProduct[]>> {
     const { data } = await this.service.get(`/product-filter/?categories=${categoryId}`);
     return data
   }

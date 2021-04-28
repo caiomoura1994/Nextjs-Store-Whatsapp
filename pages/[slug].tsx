@@ -79,7 +79,7 @@ export async function getServerSideProps({ params }) {
     props: {
       storeData: {
         ...storeData,
-        categories: categoriesWithProducts
+        categories: categoriesWithProducts.filter((category) => category?.products.length)
       },
     }
   }
