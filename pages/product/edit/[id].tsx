@@ -8,7 +8,7 @@ import CheckboxUi from '../../../components/ui/Checkbox';
 import ProductDetailUi from '../../../components/pages/productDetailUi';
 
 
-export default function ProductPageEdit() {
+export default function ProductPage() {
 
 
   const router = useRouter()
@@ -130,4 +130,11 @@ export default function ProductPageEdit() {
       </ProductDetailUi.ProductContainer>
     </Layout>
   )
+}
+
+
+export async function getServerSideProps() {
+  return {
+    props: {}
+  }
 }
