@@ -107,7 +107,7 @@ export const CategoriesList: any = styled.div`
     return css`
       color: ${gray.DEFAULT};
       border-color: ${gray.DEFAULT};
-      .${slug}{
+      .category-${slug}{
           color: ${green.light};
           border-color: ${green.light};
       }
