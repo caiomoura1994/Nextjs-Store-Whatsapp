@@ -51,13 +51,14 @@ const Error = styled.span`
 `;
 
 function Input({ label, isRequired = false, id, errors, ...props }) {
+  const showErrors = errors && errors[id]
   return (
     <>
-      <StyledInputContainer errors={errors}>
+      <StyledInputContainer errors={showErrors}>
         <input placeholder={label} type="text" id={id} required={isRequired} {...props} />
         {/* <label htmlFor={id}>{label}</label> */}
       </StyledInputContainer>
-      <Error>{errors && `${label?.split("*")[0]} é obrigatório.`}</Error>
+      <Error>{showErrors && `${label?.split("*")[0]} é obrigatório.`}</Error>
     </>
   )
 }

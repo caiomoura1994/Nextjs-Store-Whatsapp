@@ -98,7 +98,19 @@ export const GlobalStyle = createGlobalStyle`
   .text-center {
     text-align: center;
   }
+  #nprogress .bar {
+    background: rgba(91,213,144,1) !important;
+  }
+
+  #nprogress .peg {
+    box-shadow: 0 0 10px rgba(91,213,144,1), 0 0 5px rgba(91,213,144,1);
+  }
+
+  #nprogress .spinner-icon {
+    border-top-color: rgba(91,213,144,1);
+    border-left-color: rgba(91,213,144,1);
+  }
+
   ${textClasses}
   ${paddingClasses}
-  
 `;

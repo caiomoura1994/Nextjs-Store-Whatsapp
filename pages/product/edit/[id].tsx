@@ -8,7 +8,7 @@ import CheckboxUi from '../../../components/ui/Checkbox';
 import ProductDetailUi from '../../../components/pages/productDetailUi';
 
 
-export default function ProductPage() {
+export default function ProductPageEdit() {
 
 
   const router = useRouter()
@@ -130,17 +130,4 @@ export default function ProductPage() {
       </ProductDetailUi.ProductContainer>
     </Layout>
   )
-}
-
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: false
-  }
-}
-
-export async function getStaticProps() {
-  return {
-    props: {}
-  }
 }

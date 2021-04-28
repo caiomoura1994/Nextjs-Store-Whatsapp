@@ -14,33 +14,18 @@ import ViaCep from '../services/ViaCep';
 import Input from '../components/ui/Input';
 import { generateWhatsappText } from '../utils/whatsappText';
 
-export default function ProductPage({ }) {
+export default function ProductPageCart({ }) {
   const [shippigType, setShippigType] = useState("");
   const { back, push } = useRouter()
   const {
     items,
     updateItemQuantity,
     getItem,
+    removeItem,
     isEmpty
   } = useCart();
   const formContext = useForm();
-  console.log(formContext?.formState)
-  console.log(formContext?.formState.errors)
 
-  if (isEmpty) {
-    return (
-      <Layout>
-        <CarrinhoUi.CartTitle>
-          <StyledShoppingCart />
-          <h1>Carrinho</h1>
-        </CarrinhoUi.CartTitle>
-        <h2 className="text-center">Seu carrinho está vazio</h2>
-        <CarrinhoUi.FinishOrderButton onClick={back} className="gradient flex justify-center">
-          Voltar para loja
-        </CarrinhoUi.FinishOrderButton>
-      </Layout>
-    )
-  }
   const [cep, phone] = formContext.watch(['cep', 'phone']);
   const products: IItemProduct[] = items?.map(product => {
     const itemProduct = getItem(product?.id);
@@ -53,11 +38,18 @@ export default function ProductPage({ }) {
       itemProduct
     }
   })
-  const totalCart = products.map(p => p.subTotalValue).reduce((accumulator, currentValue) => accumulator + currentValue)
+  const totalCart = products?.length > 0 ? (
+    products?.map(p => p.subTotalValue)?.reduce((accumulator, currentValue) => accumulator + currentValue)
+  ) : 0;
 
 
   async function removeCartItem(productId, itemProduct) {
-    updateItemQuantity(productId, itemProduct?.quantity - 1)
+    if (itemProduct?.quantity === 1) {
+      const haveSure = confirm("Tem certeza que quer excluir esse item ?");
+      removeItem(itemProduct?.id);
+      return
+    }
+    itemProduct && updateItemQuantity(productId, itemProduct?.quantity - 1)
   }
 
   function addCartItem(productId, itemProduct) {
@@ -68,7 +60,7 @@ export default function ProductPage({ }) {
     if (!isPhone(props.phone)) return alert("Número de Telefone inválido.")
     if (!shippigType) return alert("Forma de entrega deve ser selecionada.")
     const whatsappText = generateWhatsappText({ ...props, total: formatToBRL(totalCart), products })
-    
+
     open(`https://api.whatsapp.com/send/?phone=5571988362338&text=${encodeURIComponent(whatsappText)}&app_absent=0`)
   }
 
@@ -85,6 +77,21 @@ export default function ProductPage({ }) {
   useEffect(() => {
     requestViaCep(cep);
   }, [cep])
+
+  if (isEmpty) {
+    return (
+      <Layout>
+        <CarrinhoUi.CartTitle>
+          <StyledShoppingCart />
+          <h1>Carrinho</h1>
+        </CarrinhoUi.CartTitle>
+        <h2 className="text-center">Seu carrinho está vazio</h2>
+        <CarrinhoUi.FinishOrderButton onClick={back} className="gradient flex justify-center">
+          Voltar para loja
+        </CarrinhoUi.FinishOrderButton>
+      </Layout>
+    )
+  }
 
   return (
     <Layout>

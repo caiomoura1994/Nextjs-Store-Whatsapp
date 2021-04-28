@@ -25,7 +25,7 @@ const ADITIONALS = [
 ]
 
 
-export default function ProductPage(props: IProduct) {
+export default function ProductPageDetail(props: IProduct) {
   const router = useRouter()
   const [productId, setProductId] = useState("");
   const [comment, setComment] = useState("");
@@ -151,18 +151,7 @@ export default function ProductPage(props: IProduct) {
   )
 }
 
-
-export async function getStaticPaths() {
-  return {
-    paths: [
-      { params: { id: "2" } },
-      { params: { id: "1" } }
-    ],
-    fallback: false
-  }
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const product = await ProductApi.get(params?.id);
   return {
     props: product
