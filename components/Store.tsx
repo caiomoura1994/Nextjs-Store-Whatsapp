@@ -142,6 +142,7 @@ const StoreNavbarStyles = styled.div`
         border: solid;
         border-color: white;
         border-width: 2px;
+        object-fit: cover;
     }
     .title {
         margin-bottom: 1.5rem;
@@ -186,6 +187,7 @@ interface IStoreNavbar {
   store: IStore
 }
 export const StoreNavbar = ({ store, toggleModal }: IStoreNavbar) => {
+
   return <StoreNavbarStyles>
     {/* <div className="cover" /> */}
     <img alt="image" className="avatar" src={store?.photo || "https://guiasalvadoronline.com.br/images/usr/227dac6da7.jpg"} />
@@ -252,7 +254,7 @@ export const OpenedHoursModal = ({ toggleModal, openinghours }: IOpenedHoursModa
   return <OpenedHoursModalStyle>
     <div className="container">
       <p className="center title">Horários de Funcionamento</p>
-      {openinghours?.map(({ start_hour, end_hour, day_of_week }) =>
+      {openinghours?.filter((o) => o.start_hour).map(({ start_hour, end_hour, day_of_week }) =>
         <div className="days-hours">
           <span>{day_of_week}</span> <span className="hour">{`${start_hour} às ${end_hour}`}</span>
         </div>

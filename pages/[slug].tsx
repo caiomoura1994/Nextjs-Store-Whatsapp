@@ -27,7 +27,7 @@ export default function Home({ storeData }: HomeProps) {
   const { totalUniqueItems } = useCart();
   return (
     <>
-      {show && <Modal toggleModal={toggle} />}
+      {show && <Modal toggleModal={toggle} openinghours={storeData?.openinghours} />}
       <Layout home>
         <StoreNavbar toggleModal={toggle} store={storeData} />
         <CategoriesList show={show} slug={selectedCategorySlug}>
