@@ -29,7 +29,7 @@ export default function Home({ storeData }: HomeProps) {
     <>
       {show && <Modal toggleModal={toggle} />}
       <Layout home>
-        <StoreNavbar toggleModal={toggle} />
+        <StoreNavbar toggleModal={toggle} store={storeData} />
         <CategoriesList show={show} slug={selectedCategorySlug}>
           {storeData?.categories?.map(category => <a
             href={`#category-${category?.id}`}

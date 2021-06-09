@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { IOpeninghour, IStore } from '../@types/store';
 
 export const CategorySectionTitle = styled.div`
   padding-top: 2.25rem;
@@ -180,14 +181,17 @@ const StoreNavbarStyles = styled.div`
         }
     }
 `;
-
-export const StoreNavbar = ({ toggleModal }) => {
+interface IStoreNavbar {
+  toggleModal: () => void
+  store: IStore
+}
+export const StoreNavbar = ({ store, toggleModal }: IStoreNavbar) => {
   return <StoreNavbarStyles>
     {/* <div className="cover" /> */}
-    <img alt="image" className="avatar" src="https://guiasalvadoronline.com.br/images/usr/227dac6da7.jpg" />
+    <img alt="image" className="avatar" src={store?.photo || "https://guiasalvadoronline.com.br/images/usr/227dac6da7.jpg"} />
     <div className="title">
-      <h1>MOOI Modas</h1>
-      <h2>Moda para todxs.</h2>
+      <h1>{store?.establishment_name}</h1>
+      <h2>{store?.description}</h2>
     </div>
     <div className="actions">
       <span className="chip">Fechado</span>
@@ -240,28 +244,19 @@ const OpenedHoursModalStyle = styled.div`
   }
 `;
 
-export const OpenedHoursModal = ({ toggleModal }) => {
+interface IOpenedHoursModal {
+  toggleModal: () => void
+  openinghours: IOpeninghour[]
+}
+export const OpenedHoursModal = ({ toggleModal, openinghours }: IOpenedHoursModal) => {
   return <OpenedHoursModalStyle>
     <div className="container">
       <p className="center title">Horários de Funcionamento</p>
-      <div className="days-hours">
-        <span>Domingo</span> <span className="hour">18:00 às 23:00</span>
-      </div>
-      <div className="days-hours">
-        <span>Terça</span> <span className="hour">18:00 às 21:00</span>
-      </div>
-      <div className="days-hours">
-        <span>Quarta</span> <span className="hour">18:00 às 23:00</span>
-      </div>
-      <div className="days-hours">
-        <span>Quinta</span> <span className="hour">18:00 às 23:00</span>
-      </div>
-      <div className="days-hours">
-        <span>Sexta</span> <span className="hour">18:00 às 23:00</span>
-      </div>
-      <div className="days-hours">
-        <span>Sábado</span> <span className="hour">18:00 às 23:00</span>
-      </div>
+      {openinghours?.map(({ start_hour, end_hour, day_of_week }) =>
+        <div className="days-hours">
+          <span>{day_of_week}</span> <span className="hour">{`${start_hour} às ${end_hour}`}</span>
+        </div>
+      )}
     </div>
     <div className="center ok-button gradient" onClick={toggleModal}>
       Ok
