@@ -51,19 +51,19 @@ export default function ProductPageDetail(props: IProduct) {
     addCartItem()
   }, [productId]);
 
-  function handleWithAditionals(aditionalIndex, status) {
-    const multable = aditionals;
-    multable[aditionalIndex] = {
-      ...aditionals[aditionalIndex],
-      checked: !status
-    }
-    setAditionals([...multable])
-    itemProduct && updateItem(itemProduct.id, {
-      ...itemProduct,
-      aditionals: multable,
-      comment
-    })
-  }
+  // function handleWithAditionals(aditionalIndex, status) {
+  //   const multable = aditionals;
+  //   multable[aditionalIndex] = {
+  //     ...aditionals[aditionalIndex],
+  //     checked: !status
+  //   }
+  //   setAditionals([...multable])
+  //   itemProduct && updateItem(itemProduct.id, {
+  //     ...itemProduct,
+  //     aditionals: multable,
+  //     comment
+  //   })
+  // }
 
   async function addToCard() {
     itemProduct && updateItem(itemProduct.id, {
@@ -115,7 +115,7 @@ export default function ProductPageDetail(props: IProduct) {
             <p>{props.description}</p>
           </div>
         </ProductDetailUi.HeaderSection>
-        <div className="section-title">Adicionais</div>
+        {/* <div className="section-title">Adicionais</div>
         <section>
           {aditionals?.map((ad, index) => {
             return <CheckboxUi
@@ -126,7 +126,7 @@ export default function ProductPageDetail(props: IProduct) {
             />
           }
           )}
-        </section>
+        </section> */}
         <div className="section-title">Algum comentário?</div>
         <section>
           <textarea onChange={handleChangeComment} placeholder="Ex: Remover maionese.">
