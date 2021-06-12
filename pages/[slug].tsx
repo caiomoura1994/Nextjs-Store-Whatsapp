@@ -5,6 +5,7 @@ import { IStore } from '../@types/store'
 import Layout from '../components/layout'
 import useModal from '../components/Modal'
 import ProductCard from '../components/ProductCard'
+import SEO from '../components/SEO'
 import {
   CategoriesList,
   CategorySectionTitle,
@@ -27,6 +28,7 @@ export default function Home({ storeData }: HomeProps) {
   const { totalUniqueItems } = useCart();
   return (
     <>
+      <SEO title={storeData?.establishment_name} description={storeData?.description} />
       {show && <Modal toggleModal={toggle} openinghours={storeData?.openinghours} />}
       <Layout home>
         <StoreNavbar toggleModal={toggle} store={storeData} />
