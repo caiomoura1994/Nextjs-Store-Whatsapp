@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useCart } from 'react-use-cart'
 import { IStore } from '../@types/store'
 import Layout from '../components/layout'
@@ -23,6 +23,9 @@ interface HomeProps {
 }
 
 export default function Home({ storeData }: HomeProps) {
+  useEffect(() => {
+    localStorage.setItem("storeData", JSON.stringify(storeData))
+  }, [])
   const [selectedCategorySlug, setSelectedCategorySlug] = useState(storeData.categories[0].id)
   const [Modal, show, toggle] = useModal(OpenedHoursModal);
   const { totalUniqueItems } = useCart();

@@ -11,6 +11,7 @@ declare module "styled-components" {
       },
       blue: {
         DEFAULT: string;
+        dark: string;
       },
       red: {
         DEFAULT: string;

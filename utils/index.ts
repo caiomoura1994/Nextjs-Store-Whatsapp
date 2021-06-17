@@ -20,6 +20,7 @@ export const theme: DefaultTheme = {
     },
     blue: {
       DEFAULT: '#61A0FF',
+      dark: '#1a75ff',
     },
     red: {
       DEFAULT: '#F12121',

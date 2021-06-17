@@ -20,6 +20,13 @@ const ShippingSection = styled.section`
 margin: 1rem;
 padding-bottom: 10rem;
 color: ${({ theme }) => theme.colors.gray.dark};
+.thing-container {
+  h4 {
+    margin: 1rem;
+  }
+  display: flex;
+  align-items: center;
+}
 h2 {
   font-weight: 400;
   margin-bottom: 1rem;
@@ -88,8 +95,8 @@ border-radius: 0.75rem;
 `;
 
 export default {
-    FinishOrderButton,
-    CartTitle,
-    ShippingSection,
-    ProductCardCartContainer,
+  FinishOrderButton,
+  CartTitle,
+  ShippingSection,
+  ProductCardCartContainer,
 }

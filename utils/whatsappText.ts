@@ -3,8 +3,11 @@ import { formatToBRL, formatToDateTime } from "brazilian-values";
 export const generateWhatsappText = ({
     total,
     products,
+    shippigType,
     ...props
 }) => {
+    const shippigText = shippigType === "pickInStore" ? "Retirada na Loja" : "Quanto fica o frete para esse endereço ?";
+
     const formattedAddress = `${props.street}, ${props.number} - ${props.complement}
 ${props.neigbohood}, ${props.city}/${props.uf}
 ${props.cep}`;
@@ -19,7 +22,7 @@ ${props.cep}`;
         `;
     });
 
-    return `*Pedido Zapei #0001* - Pastello Pizzaria & Pastelaria
+    return `*Pedido Zeki #0001* - Pastello Pizzaria & Pastelaria
 ---------------------------------------
 
 ${formattedProducts}
@@ -30,8 +33,14 @@ ${formattedProducts}
 *${props.name}*
 ${props.phone}
 
-${formattedAddress}
+${shippigType === "address" ? formattedAddress : ""}
 
-Pedido gerado pelo Zapei às ${formatToDateTime(new Date())}
+${props.thing ? `Troco para: ${props.thing}` : "Pagamento via Cartão"}
+
+
+${shippigText}
+
+
+Pedido gerado pelo Zeki às ${formatToDateTime(new Date())}
     `
 };

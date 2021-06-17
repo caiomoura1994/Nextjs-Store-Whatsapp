@@ -13,9 +13,13 @@ import { useForm } from 'react-hook-form';
 import ViaCep from '../services/ViaCep';
 import Input from '../components/ui/Input';
 import { generateWhatsappText } from '../utils/whatsappText';
+import { IStore } from '../@types/store';
 
 export default function ProductPageCart({ }) {
+
+  const storeData: IStore = JSON.parse(localStorage.getItem("storeData"))
   const [shippigType, setShippigType] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const { back, push } = useRouter()
   const {
     items,
@@ -26,7 +30,7 @@ export default function ProductPageCart({ }) {
   } = useCart();
   const formContext = useForm();
 
-  const [cep, phone] = formContext.watch(['cep', 'phone']);
+  const [cep, phone, thing] = formContext.watch(['cep', 'phone', 'thing']);
   const products: IItemProduct[] = items?.map(product => {
     const itemProduct = getItem(product?.id);
     const checkedAditionals = itemProduct?.aditionals?.filter((aditional) => aditional?.checked)
@@ -57,9 +61,11 @@ export default function ProductPageCart({ }) {
   }
 
   function sendWhatsappMessage(props) {
+    if (!paymentMethod) return alert("Forma de pagamento inválida.")
+    if (!props.thing) return alert("Troco não informádo")
     if (!isPhone(props.phone)) return alert("Número de Telefone inválido.")
     if (!shippigType) return alert("Forma de entrega deve ser selecionada.")
-    const whatsappText = generateWhatsappText({ ...props, total: formatToBRL(totalCart), products })
+    const whatsappText = generateWhatsappText({ ...props, total: formatToBRL(totalCart), products, shippigType })
 
     open(`https://api.whatsapp.com/send/?phone=5571988362338&text=${encodeURIComponent(whatsappText)}&app_absent=0`)
   }
@@ -153,19 +159,44 @@ export default function ProductPageCart({ }) {
           }}
         />
         <h2>Entrega</h2>
-        <CheckboxUi
+        {storeData?.can_pick_up_in_store && <CheckboxUi
           onClick={() => setShippigType("pickInStore")}
           text="Retirar na loja"
           isChecked={shippigType === "pickInStore"}
-        />
-        <CheckboxUi
+        />}
+        {storeData.delivery && <CheckboxUi
           onClick={() => setShippigType("address")}
           text="Entregar no meu endereço"
           isChecked={shippigType === "address"}
-        />
+        />}
         {
           shippigType === "address" && <ShippingForm formContext={formContext} />
         }
+        <h2>Formas de pagamento</h2>
+        <CheckboxUi
+          onClick={() => setPaymentMethod("money")}
+          text="Dinheiro"
+          isChecked={paymentMethod === "money"}
+        />
+        {paymentMethod === "money" && <div className="thing-container">
+          <h4>R$</h4>
+          <Input
+            errors={formContext?.formState?.errors}
+            {...formContext.register("thing")}
+            id="thing"
+            label="Troco para quanto?*"
+            value={thing}
+            onChange={(event) => {
+              formContext?.setValue('thing', String(event.target.value));
+            }}
+            type="number"
+          />
+        </div>}
+        <CheckboxUi
+          onClick={() => setPaymentMethod("creditCard")}
+          text="Cartão"
+          isChecked={paymentMethod === "creditCard"}
+        />
         <Link href="/">
           <a>Continue a comprar</a>
         </Link>

@@ -58,6 +58,7 @@ export interface IStore {
     photo: string;
     is_active: boolean;
     can_pick_up_in_store: boolean;
+    delivery: boolean;
     slug: string;
     created_at: Date;
     updated_at: Date;

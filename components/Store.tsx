@@ -162,8 +162,12 @@ const StoreNavbarStyles = styled.div`
         .chip {
             padding: 0.25rem 0.5rem;
             border-radius: 1rem;
-            background: ${({ theme }) => theme.colors.red.DEFAULT};
+            background: ${({ theme, }) => theme.colors.red.DEFAULT};
             color: ${({ theme }) => theme.colors.white.DEFAULT};
+            &--opened {
+              background: ${({ theme }) => theme.colors.blue.dark};
+              color: ${({ theme }) => theme.colors.white.DEFAULT};
+            }
         }
         .hour {
             padding: 1rem;
@@ -187,6 +191,22 @@ interface IStoreNavbar {
   store: IStore
 }
 export const StoreNavbar = ({ store, toggleModal }: IStoreNavbar) => {
+  const days = ['DOMINGO', 'SEGUNDA', 'TERCA', 'QUARTA', 'QUINTA', 'SEXTA', 'SABADO'];
+  const d = new Date();
+  const dayName = days[d.getDay()];
+  console.log(dayName)
+  const filterIfTodayIsAvailabel = store.openinghours.filter(hour => hour.day_of_week === dayName);
+  let storeIsOpened = false;
+
+  if (filterIfTodayIsAvailabel.length > 0) {
+    console.log('filterIfTodayIsAvailabel', filterIfTodayIsAvailabel)
+    const [{ start_hour, end_hour }] = filterIfTodayIsAvailabel;
+    const timeNowToNumber = Number(`${d.getHours()}${d.getMinutes()}`);
+    if (start_hour && end_hour) {
+      if (timeNowToNumber > Number(start_hour.split(":").join(""))) { storeIsOpened = true; }
+      if (timeNowToNumber < Number(end_hour.split(":").join(""))) { storeIsOpened = true; }
+    }
+  }
 
   return <StoreNavbarStyles>
     {/* <div className="cover" /> */}
@@ -196,7 +216,7 @@ export const StoreNavbar = ({ store, toggleModal }: IStoreNavbar) => {
       <h2>{store?.description}</h2>
     </div>
     <div className="actions">
-      <span className="chip">Fechado</span>
+      <span className={`chip ${storeIsOpened && "chip--opened"}`}>{storeIsOpened ? "Aberto" : "Fechado"}</span>
       <span onClick={toggleModal} className="hour">Ver horários <i className="arrow-down"></i></span>
     </div>
   </StoreNavbarStyles>
