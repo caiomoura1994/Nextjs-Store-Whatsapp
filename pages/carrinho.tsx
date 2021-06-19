@@ -65,7 +65,7 @@ export default function ProductPageCart({ }) {
     if (!props.thing) return alert("Troco não informádo")
     if (!isPhone(props.phone)) return alert("Número de Telefone inválido.")
     if (!shippigType) return alert("Forma de entrega deve ser selecionada.")
-    const whatsappText = generateWhatsappText({ ...props, total: formatToBRL(totalCart), products, shippigType })
+    const whatsappText = generateWhatsappText({ ...props, total: formatToBRL(totalCart), products, shippigType, storeData })
 
     open(`https://api.whatsapp.com/send/?phone=5571988362338&text=${encodeURIComponent(whatsappText)}&app_absent=0`)
   }

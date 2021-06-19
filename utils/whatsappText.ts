@@ -4,6 +4,7 @@ export const generateWhatsappText = ({
     total,
     products,
     shippigType,
+    storeData,
     ...props
 }) => {
     const shippigText = shippigType === "pickInStore" ? "Retirada na Loja" : "Quanto fica o frete para esse endereço ?";
@@ -18,11 +19,11 @@ ${props.cep}`;
             formattedAdditionals = product.checkedAditionals.map((additional => ` ${additional.title} ${additional.price}`));
         }
         return `*${product.quantity}x ${product.name} ${formatToBRL(product.price)}*
-        - ${formattedAdditionals}
+        ${formattedAdditionals && `- ${formattedAdditionals}`}}
         `;
     });
 
-    return `*Pedido Zeki #0001* - Pastello Pizzaria & Pastelaria
+    return `*Pedido Zeki #0001* - ${storeData.establishment_name}
 ---------------------------------------
 
 ${formattedProducts}
