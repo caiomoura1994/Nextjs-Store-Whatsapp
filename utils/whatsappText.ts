@@ -19,7 +19,7 @@ ${props.cep}`;
             formattedAdditionals = product.checkedAditionals.map((additional => ` ${additional.title} ${additional.price}`));
         }
         return `*${product.quantity}x ${product.name} ${formatToBRL(product.price)}*
-        ${formattedAdditionals && `- ${formattedAdditionals}`}}
+        ${formattedAdditionals && `- ${formattedAdditionals}`}
         `;
     });
 
