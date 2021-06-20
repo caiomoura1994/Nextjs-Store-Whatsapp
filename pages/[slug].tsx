@@ -23,12 +23,28 @@ interface HomeProps {
 }
 
 export default function Home({ storeData }: HomeProps) {
-  useEffect(() => {
-    localStorage.setItem("storeData", JSON.stringify(storeData))
-  }, [])
   const [selectedCategorySlug, setSelectedCategorySlug] = useState(storeData.categories[0].id)
+  const [categories, setCategories] = useState([])
   const [Modal, show, toggle] = useModal(OpenedHoursModal);
   const { totalUniqueItems } = useCart();
+
+  async function handleWithCategories() {
+    const categoriesWithProducts = await Promise.all(
+      storeData?.categories?.map(async category => {
+        const products = await ProductApi.listByCategory(String(category?.id))
+        return {
+          ...category,
+          products
+        }
+      })
+    )
+    setCategories(categoriesWithProducts.filter((category) => category?.products.length))
+  }
+  useEffect(() => {
+    localStorage.setItem("storeData", JSON.stringify(storeData))
+    handleWithCategories()
+  }, [])
+
   return (
     <>
       <SEO title={storeData?.establishment_name} description={storeData?.description} />
@@ -36,7 +52,7 @@ export default function Home({ storeData }: HomeProps) {
       <Layout home>
         <StoreNavbar toggleModal={toggle} store={storeData} />
         <CategoriesList show={show} slug={selectedCategorySlug}>
-          {storeData?.categories?.map(category => <a
+          {categories?.map(category => <a
             href={`#category-${category?.id}`}
             key={category?.id}
             className={`category-${category?.id}`}
@@ -47,7 +63,7 @@ export default function Home({ storeData }: HomeProps) {
           )}
         </CategoriesList>
         <ProductList>
-          {storeData?.categories?.map(category => <div key={category.id}>
+          {categories?.map(category => <div key={category.id}>
             <CategorySectionTitle id={`category-${category?.id}`}>
               <p>{category.name}</p>
               <div />
@@ -70,22 +86,9 @@ export default function Home({ storeData }: HomeProps) {
 
 export async function getServerSideProps({ params }) {
   const storeData = await StoreApi.getBySlug(params.slug);
-  const categoriesWithProducts = await Promise.all(
-    storeData?.categories?.map(async category => {
-      const products = await ProductApi.listByCategory(String(category?.id))
-      return {
-        ...category,
-        products
-      }
-    })
-  )
-
   return {
     props: {
-      storeData: {
-        ...storeData,
-        categories: categoriesWithProducts.filter((category) => category?.products.length)
-      },
+      storeData
     }
   }
 }
