@@ -10,11 +10,11 @@ import {
   CategoriesList,
   CategorySectionTitle,
   FavCartButton,
-  OpenedHoursModal,
   ProductList,
-  StoreNavbar,
   StyledShoppingCart,
 } from '../components/Store'
+import StoreNavbar from '../components/StoreNavbar'
+import OpenedHoursModal from '../components/OpenedHoursModal'
 import ProductApi from '../services/ProductApi'
 import StoreApi from '../services/StoreApi'
 
