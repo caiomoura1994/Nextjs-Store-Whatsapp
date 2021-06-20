@@ -17,10 +17,14 @@ import { IStore } from '../@types/store';
 
 export default function ProductPageCart({ }) {
 
-  const storeData: IStore = JSON.parse(localStorage.getItem("storeData"))
+  const [storeData, setStoreData] = useState<Partial<IStore>>({});
   const [shippigType, setShippigType] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const { back, push } = useRouter()
+
+  useEffect(() => {
+    setStoreData(JSON.parse(localStorage.getItem("storeData")))
+  }, [])
   const {
     items,
     updateItemQuantity,
@@ -164,7 +168,7 @@ export default function ProductPageCart({ }) {
           text="Retirar na loja"
           isChecked={shippigType === "pickInStore"}
         />}
-        {storeData.delivery && <CheckboxUi
+        {storeData?.delivery && <CheckboxUi
           onClick={() => setShippigType("address")}
           text="Entregar no meu endereço"
           isChecked={shippigType === "address"}
