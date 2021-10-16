@@ -36,7 +36,9 @@ ${props.phone}
 
 ${shippigType === "address" ? formattedAddress : ""}
 
-${props.thing ? `Troco para: ${props.thing}` : "Pagamento via Cartão"}
+${props.thing && `Troco para: ${props.thing}`}
+${props.paymentMethod === 'pix' && 'Pagamento via Pix'}
+${props.paymentMethod === 'creditCard' && 'Pagamento via Cartão'}
 
 
 ${shippigText}

@@ -53,6 +53,7 @@ export default function ProductPage() {
   async function removeCartItem() {
     if (itemProduct?.quantity === 1) {
       const haveSure = confirm("Tem certeza que quer excluir esse item ?");
+      if (!haveSure) return;
       removeItem(itemProduct?.id);
       haveSure && router.back();
       return

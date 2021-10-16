@@ -14,6 +14,7 @@ import styled from 'styled-components'
 // />
 const BackButton = styled.div`
   font-size: 1rem;
+  z-index: 999;
   color: #707070;
   padding: 1rem;
   position: sticky;

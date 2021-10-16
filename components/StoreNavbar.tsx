@@ -9,12 +9,10 @@ const StoreNavbar = ({ store, toggleModal }: IStoreNavbar) => {
     const days = ['DOMINGO', 'SEGUNDA', 'TERCA', 'QUARTA', 'QUINTA', 'SEXTA', 'SABADO'];
     const d = new Date();
     const dayName = days[d.getDay()];
-    console.log(dayName)
     const filterIfTodayIsAvailabel = store.openinghours.filter(hour => hour.day_of_week === dayName);
     let storeIsOpened = false;
 
     if (filterIfTodayIsAvailabel.length > 0) {
-        console.log('filterIfTodayIsAvailabel', filterIfTodayIsAvailabel)
         const [{ start_hour, end_hour }] = filterIfTodayIsAvailabel;
         const timeNowToNumber = Number(`${d.getHours()}${d.getMinutes()}`);
         if (start_hour && end_hour) {

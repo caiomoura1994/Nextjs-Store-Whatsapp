@@ -54,8 +54,8 @@ export default function ProductPageCart({ }) {
   async function removeCartItem(productId, itemProduct) {
     if (itemProduct?.quantity === 1) {
       const haveSure = confirm("Tem certeza que quer excluir esse item ?");
+      if (!haveSure) return;
       removeItem(itemProduct?.id);
-      return
     }
     itemProduct && updateItemQuantity(productId, itemProduct?.quantity - 1)
   }
@@ -66,12 +66,12 @@ export default function ProductPageCart({ }) {
 
   function sendWhatsappMessage(props) {
     if (!paymentMethod) return alert("Forma de pagamento inválida.")
-    if (!props.thing) return alert("Troco não informádo")
+    if (!props.thing && paymentMethod === 'money') return alert("Troco não informádo")
     if (!isPhone(props.phone)) return alert("Número de Telefone inválido.")
     if (!shippigType) return alert("Forma de entrega deve ser selecionada.")
-    const whatsappText = generateWhatsappText({ ...props, total: formatToBRL(totalCart), products, shippigType, storeData })
+    const whatsappText = generateWhatsappText({ ...props, total: formatToBRL(totalCart), products, shippigType, storeData, paymentMethod })
 
-    open(`https://api.whatsapp.com/send/?phone=5571988362338&text=${encodeURIComponent(whatsappText)}&app_absent=0`)
+    open(`https://api.whatsapp.com/send/?phone=55${storeData.phone_number}&text=${encodeURIComponent(whatsappText)}&app_absent=0`)
   }
 
   async function requestViaCep(cepParam) {
@@ -201,9 +201,14 @@ export default function ProductPageCart({ }) {
           text="Cartão"
           isChecked={paymentMethod === "creditCard"}
         />
-        <Link href="/">
-          <a>Continue a comprar</a>
-        </Link>
+        <CheckboxUi
+          onClick={() => setPaymentMethod("pix")}
+          text="Pix"
+          isChecked={paymentMethod === "pix"}
+        />
+        <a href="#" onClick={back}>
+          Continue a comprar
+        </a>
       </CarrinhoUi.ShippingSection>
       <CarrinhoUi.FinishOrderButton
         onClick={formContext.handleSubmit(sendWhatsappMessage)}

@@ -59,6 +59,7 @@ export interface IStore {
     is_active: boolean;
     can_pick_up_in_store: boolean;
     delivery: boolean;
+    phone_number: string;
     slug: string;
     created_at: Date;
     updated_at: Date;

@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
 const FinishOrderButton = styled.div`
-color: white;
-padding: 1.5rem;
-font-size: 1.25rem;
-position: fixed;
-bottom: 0;
-left: 0;
-width: 100%;
+  color: white;
+  padding: 1.5rem;
+  font-size: 1.25rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  :hover{
+    opacity: 0.5;
+  }
 `;
 
 const CartTitle = styled.section`
