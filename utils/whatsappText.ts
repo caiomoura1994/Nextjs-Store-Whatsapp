@@ -23,7 +23,7 @@ ${props.cep}`;
         `;
     });
 
-    return `*Pedido Zeki #0001* - ${storeData.establishment_name}
+    return `*Pedido Zeki* - ${storeData.establishment_name}
 ---------------------------------------
 
 ${formattedProducts}
@@ -36,8 +36,8 @@ ${props.phone}
 
 ${shippigType === "address" ? formattedAddress : ""}
 
-${props.thing && `Troco para: ${props.thing}`}
-${props.paymentMethod === 'pix' && 'Pagamento via Pix'}
+${props.thing ? `Troco para: ${props.thing}` : ""}
+${props.paymentMethod === 'pix' ? 'Pagamento via Pix' : ""}
 ${props.paymentMethod === 'creditCard' && 'Pagamento via Cartão'}
 
 

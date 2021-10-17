@@ -15,7 +15,7 @@ import styled from 'styled-components'
 const BackButton = styled.div`
   font-size: 1rem;
   z-index: 999;
-  color: #707070;
+  color: ${({ theme }) => theme.colors.gray.dark};
   padding: 1rem;
   position: sticky;
   top: 0;
@@ -26,7 +26,7 @@ export const siteTitle = 'Next.js Sample Website'
 export default function Layout({ children, home = false, goBackAction = () => { } }) {
   const router = useRouter();
   return (
-    <div style={{ background: "#FCFCFC", maxWidth: 500, margin: "auto" }}>
+    <div style={{ background: "#FCFCFC", maxWidth: 1000, margin: "auto" }}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta

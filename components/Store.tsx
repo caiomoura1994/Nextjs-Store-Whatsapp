@@ -37,7 +37,7 @@ export const FavCartButton = styled.div`
     position: absolute;
     bottom: 2rem;
     left: 2rem;
-    background: #5BD590;
+    background: ${({ theme }) => theme.colors.green.light};
     text-align: center;
     border-radius: 50%;
     color: white;
