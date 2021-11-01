@@ -16,7 +16,7 @@ ${props.cep}`;
     const formattedProducts = products.map((product) => {
         let formattedAdditionals = '';
         if (product?.checkedAditionals?.length > 0) {
-            formattedAdditionals = product?.checkedAditionals?.map((additional => ` ${additional.title} ${additional.price}`));
+            formattedAdditionals = product?.checkedAditionals?.map((additional => ` ${additional.description} ${additional.price}`));
         }
         return `*${product.quantity}x ${product.name} ${formatToBRL(product.price)}*
         ${formattedAdditionals && `- ${formattedAdditionals}`}

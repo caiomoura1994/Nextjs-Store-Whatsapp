@@ -23,7 +23,7 @@ export interface IProduct {
 
 export interface IAditional {
     id: number;
-    title: string;
+    description: string;
     price: number;
 }
 

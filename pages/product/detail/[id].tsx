@@ -9,27 +9,12 @@ import ProductDetailUi from '../../../components/pages/productDetailUi';
 import ProductApi from '../../../services/ProductApi';
 import { IProduct } from '../../../@types/store';
 
-const ADITIONALS = [
-  {
-    title: "Bolsa de palha",
-    id: 1,
-    checked: false,
-    price: 10
-  },
-  {
-    title: "Test 2",
-    id: 2,
-    checked: false,
-    price: 20
-  }
-]
-
 
 export default function ProductPageDetail(props: IProduct) {
   const router = useRouter()
   const [productId, setProductId] = useState("");
   const [comment, setComment] = useState("");
-  const [aditionals, setAditionals] = useState(ADITIONALS);
+  const [aditionals, setAditionals] = useState([]);
   const {
     // totalUniqueItems,
     // totalItems,
@@ -40,7 +25,7 @@ export default function ProductPageDetail(props: IProduct) {
     getItem,
     updateItem
   } = useCart();
-  const sumAdditionals = aditionals.map(d => d.checked && d.price || 0).reduce((ad, currentValue) => ad + currentValue)
+  const sumAdditionals = aditionals?.map(d => d.checked && Number(d.price) || 0)?.reduce((ad, currentValue) => ad + currentValue, 0)
   const itemProduct = getItem(productId);
 
   useEffect(() => {
@@ -51,19 +36,19 @@ export default function ProductPageDetail(props: IProduct) {
     addCartItem()
   }, [productId]);
 
-  // function handleWithAditionals(aditionalIndex, status) {
-  //   const multable = aditionals;
-  //   multable[aditionalIndex] = {
-  //     ...aditionals[aditionalIndex],
-  //     checked: !status
-  //   }
-  //   setAditionals([...multable])
-  //   itemProduct && updateItem(itemProduct.id, {
-  //     ...itemProduct,
-  //     aditionals: multable,
-  //     comment
-  //   })
-  // }
+  function handleWithAditionals(aditionalIndex, status) {
+    const multable = aditionals;
+    multable[aditionalIndex] = {
+      ...aditionals[aditionalIndex],
+      checked: !status
+    }
+    setAditionals([...multable])
+    itemProduct && updateItem(itemProduct.id, {
+      ...itemProduct,
+      aditionals: multable,
+      comment
+    })
+  }
 
   async function addToCard() {
     itemProduct && updateItem(itemProduct.id, {
@@ -101,8 +86,14 @@ export default function ProductPageDetail(props: IProduct) {
 
   const goBackAction = () => {
     removeItem(productId);
-    setAditionals(ADITIONALS);
+    setAditionals([]);
   }
+  useEffect(() => {
+    const storeData = JSON.parse(localStorage.getItem("storeData"))
+    setAditionals(
+      storeData?.additionals?.map((additional) => ({ ...additional, checked: false }))
+    )
+  }, [])
 
   return (
     <Layout goBackAction={goBackAction}>
@@ -115,18 +106,18 @@ export default function ProductPageDetail(props: IProduct) {
             <p>{props.description}</p>
           </div>
         </ProductDetailUi.HeaderSection>
-        {/* <div className="section-title">Adicionais</div>
+        <div className="section-title">Adicionais</div>
         <section>
           {aditionals?.map((ad, index) => {
             return <CheckboxUi
               key={ad.id}
               onClick={() => handleWithAditionals(index, ad.checked)}
-              text={`${ad.title} | ${formatToBRL(ad.price)}`}
+              text={`${ad.description} | ${formatToBRL(ad.price)}`}
               isChecked={ad.checked}
             />
           }
           )}
-        </section> */}
+        </section>
         <div className="section-title">Algum comentário?</div>
         <section>
           <textarea onChange={handleChangeComment} placeholder="Ex: Remover maionese.">

@@ -25,21 +25,21 @@ export default function ProductPage() {
 
   const [comment, setComment] = useState("");
   const [aditionals, setAditionals] = useState(itemProduct?.aditionals || []);
-  const sumAdditionals = aditionals.map(d => d.checked && d.price || 0).reduce((ad, currentValue) => ad + currentValue)
+  const sumAdditionals = aditionals.map(d => d.checked && d.price || 0).reduce((ad, currentValue) => ad + currentValue, 0)
 
-  // function handleWithAditionals(aditionalIndex, status) {
-  //   const multable = aditionals;
-  //   multable[aditionalIndex] = {
-  //     ...aditionals[aditionalIndex],
-  //     checked: !status
-  //   }
-  //   setAditionals([...multable])
-  //   itemProduct && updateItem(itemProduct?.id, {
-  //     ...itemProduct,
-  //     aditionals: multable,
-  //     comment
-  //   })
-  // }
+  function handleWithAditionals(aditionalIndex, status) {
+    const multable = aditionals;
+    multable[aditionalIndex] = {
+      ...aditionals[aditionalIndex],
+      checked: !status
+    }
+    setAditionals([...multable])
+    itemProduct && updateItem(itemProduct?.id, {
+      ...itemProduct,
+      aditionals: multable,
+      comment
+    })
+  }
 
   async function addToCard() {
     itemProduct && updateItem(itemProduct?.id, {
@@ -97,18 +97,18 @@ export default function ProductPage() {
             <p>{itemProduct?.description}</p>
           </div>
         </ProductDetailUi.HeaderSection>
-        {/* <div className="section-title">Adicionais</div>
+        <div className="section-title">Adicionais</div>
         <section>
           {aditionals?.map((ad, index) => {
             return <CheckboxUi
               key={ad.id}
               onClick={() => handleWithAditionals(index, ad.checked)}
-              text={`${ad.title} | ${formatToBRL(ad.price)}`}
+              text={`${ad.description} | ${formatToBRL(ad.price)}`}
               isChecked={ad.checked}
             />
           }
           )}
-        </section> */}
+        </section>
         <div className="section-title">Algum comentário?</div>
         <section>
           <textarea onChange={handleChangeComment} placeholder="Ex: Remover maionese.">

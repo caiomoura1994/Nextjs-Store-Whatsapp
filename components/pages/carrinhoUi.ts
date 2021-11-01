@@ -76,6 +76,13 @@ border-radius: 0.75rem;
   }
 }
 .additionals {
+    margin: 0 0 0 1rem;
+  &:nth-child(2) {
+    margin: 1rem 0 0 1rem;
+  }
+  &:nth-last-child(3) {
+    margin: 0 0 1rem 1rem;
+  }
 }
 .subtotal {
   font-weight: 600;

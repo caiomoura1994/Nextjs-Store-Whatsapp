@@ -35,9 +35,14 @@ export default function ProductPageCart({ }) {
   const formContext = useForm();
 
   const [cep, phone, thing] = formContext.watch(['cep', 'phone', 'thing']);
+  console.log('items:', items);
   const products: IItemProduct[] = items?.map(product => {
     const itemProduct = getItem(product?.id);
     const checkedAditionals = itemProduct?.aditionals?.filter((aditional) => aditional?.checked)
+    // console.log('checkedAditionals', checkedAditionals)
+    console.log('itemProduct?.quantity', itemProduct?.quantity)
+    console.log('itemProduct?.sumAdditionals', itemProduct?.sumAdditionals)
+    console.log('itemProduct?.itemTotal', itemProduct?.itemTotal)
     const subTotalValue = (itemProduct?.quantity * itemProduct?.sumAdditionals) + Number(itemProduct?.itemTotal);
     return {
       ...itemProduct,
@@ -128,7 +133,7 @@ export default function ProductPageCart({ }) {
               </div>
               {product.checkedAditionals?.map((aditional) => (
                 <div key={aditional?.id} className="flex justify-space-between additionals">
-                  <label>{aditional?.title}</label>
+                  <label>• {aditional?.description}</label>
                   <label>{formatToBRL(aditional?.price)}</label>
                 </div>
               ))}

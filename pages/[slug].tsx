@@ -23,6 +23,7 @@ interface HomeProps {
 }
 
 export default function Home({ storeData }: HomeProps) {
+  console.log('storeData', storeData);
   const [selectedCategorySlug, setSelectedCategorySlug] = useState(storeData.categories[0].id)
   const [categories, setCategories] = useState([])
   const [Modal, show, toggle] = useModal(OpenedHoursModal);
