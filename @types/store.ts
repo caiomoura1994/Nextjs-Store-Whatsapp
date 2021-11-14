@@ -18,7 +18,7 @@ export interface IProduct {
     created_at: Date;
     updated_at: Date;
     store: number;
-    categories: number[];
+    categories: number[] & ICategory[];
 }
 
 export interface IAditional {

@@ -1,6 +1,6 @@
 import { DefaultTheme } from "styled-components";
 import { createGlobalStyle } from "styled-components";
-import { paddingClasses, textClasses } from "./styles";
+import { opacityClasses, marginClasses, paddingClasses, textClasses } from "./styles";
 
 export const mediaQueries = {
   sm: '@media (min-width: 640px)', // 640px
@@ -10,12 +10,17 @@ export const mediaQueries = {
   "2xl": '@media (min-width: 1536px)', // 1536px
 };
 
+// const light =  '#5BD590'; // #d30200
+// const dark =  '#02A9A6'; // #8f1716
+const light =  '#d30200'; // #d30200
+const dark =  '#8f1716'; // #8f1716
+
 export const theme: DefaultTheme = {
   colors: {
     green: {
       primary: '#a4e9c7',
-      light: '#5BD590',
-      dark: '#02A9A6',
+      light,
+      dark,
       custom_store: '#E6F9EE',
     },
     blue: {
@@ -80,10 +85,10 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
   .gradient {
-    background: linear-gradient(270deg, rgba(2,169,166,1) 0%, rgba(91,213,144,1) 75%);
+    background: linear-gradient(270deg, ${dark} 0%, ${light} 75%);
   }
   .gradient-color {
-    background: -webkit-linear-gradient(270deg, rgba(2,169,166,1) 0%, rgba(91,213,144,1) 75%);
+    background: -webkit-linear-gradient(270deg, ${dark} 0%, ${light} 75%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -100,18 +105,20 @@ export const GlobalStyle = createGlobalStyle`
     text-align: center;
   }
   #nprogress .bar {
-    background: rgba(91,213,144,1) !important;
+    background: ${light} !important;
   }
 
   #nprogress .peg {
-    box-shadow: 0 0 10px rgba(91,213,144,1), 0 0 5px rgba(91,213,144,1);
+    box-shadow: 0 0 10px ${light}, 0 0 5px ${light};
   }
 
   #nprogress .spinner-icon {
-    border-top-color: rgba(91,213,144,1);
-    border-left-color: rgba(91,213,144,1);
+    border-top-color: ${light};
+    border-left-color: ${light};
   }
 
   ${textClasses}
   ${paddingClasses}
+  ${marginClasses}
+  ${opacityClasses}
 `;

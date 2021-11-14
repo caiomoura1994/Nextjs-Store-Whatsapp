@@ -70,6 +70,7 @@ export default function ProductPageCart({ }) {
   }
 
   function sendWhatsappMessage(props) {
+    console.log('props', props)
     if (!paymentMethod) return alert("Forma de pagamento inválida.")
     if (!props.thing && paymentMethod === 'money') return alert("Troco não informádo")
     if (!isPhone(props.phone)) return alert("Número de Telefone inválido.")
@@ -131,6 +132,12 @@ export default function ProductPageCart({ }) {
                 <label>{product.itemProduct?.name}</label>
                 <label>{formatToBRL(product.itemProduct?.itemTotal)}</label>
               </div>
+              {product.selectedFlavors?.map((product, idxProduct) => (
+                <div key={product?.id} className="flex justify-space-between additionals">
+                  <label> {idxProduct + 1} - {product?.name}</label>
+                </div>
+              ))}
+              {!product?.selectedFlavors?.length && <br />}
               {product.checkedAditionals?.map((aditional) => (
                 <div key={aditional?.id} className="flex justify-space-between additionals">
                   <label>• {aditional?.description}</label>
@@ -138,8 +145,7 @@ export default function ProductPageCart({ }) {
                 </div>
               ))}
               {!product.checkedAditionals?.length && <br />}
-
-              <div className="flex justify-space-between subtotal">
+              <div className="flex justify-space-between subtotal m-2">
                 <label>Subtotal</label>
                 <label className="value">{formatToBRL(product.subTotalValue)}</label>
               </div>

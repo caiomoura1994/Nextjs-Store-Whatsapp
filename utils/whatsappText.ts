@@ -16,12 +16,16 @@ ${props.cep}`;
     const formattedProducts = products.map((product) => {
         let formattedAdditionals = '';
         if (product?.checkedAditionals?.length > 0) {
-            formattedAdditionals = product?.checkedAditionals?.map((additional => ` ${additional.description} ${additional.price}`));
+            formattedAdditionals = product?.checkedAditionals?.map((additional => `      * ${additional.description} ${additional.price}`)).join('\n');
         }
+        const pizzaSizeName = product?.pizzaSizeSelected === 'LARGE' ? 'GRANDE' : 'FAMÍLIA';
+        const additionalsText = formattedAdditionals ? `    - ADICIONAIS:\n${formattedAdditionals}` : ''
+        const selectedFlavorsTitle =  product?.selectedFlavors ? `  Sabores da Pizza *${pizzaSizeName}*:\n` : ''
+        const selectedFlavorsText = product?.selectedFlavors?.map((pizzaFlavors, pIndex) => `    ${pIndex + 1}. ${pizzaFlavors.name}`).join('\n') || ''
+        const obsText = product?.comment ? `*OBS: ${product?.comment}*\n` : ''
         return `*${product.quantity}x ${product.name} ${formatToBRL(product.price)}*
-        ${formattedAdditionals && `- ${formattedAdditionals}`}
-        `;
-    });
+${obsText}${selectedFlavorsTitle}${selectedFlavorsText}${additionalsText}`;
+    }).join('\n\n');
 
     return `*Pedido Zeki* - ${storeData.establishment_name}
 ---------------------------------------
@@ -38,12 +42,11 @@ ${shippigType === "address" ? formattedAddress : ""}
 
 ${props.thing ? `Troco para: ${props.thing}` : ""}
 ${props.paymentMethod === 'pix' ? 'Pagamento via Pix' : ""}
-${props.paymentMethod === 'creditCard' && 'Pagamento via Cartão'}
+${props.paymentMethod === 'creditCard' ? 'Pagamento via Cartão' : ''}
 
 
 ${shippigText}
 
 
-Pedido gerado pelo Zeki às ${formatToDateTime(new Date())}
-    `
+Pedido gerado pelo Zeki às ${formatToDateTime(new Date())}`
 };

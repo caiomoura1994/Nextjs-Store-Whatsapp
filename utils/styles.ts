@@ -76,3 +76,33 @@ export const paddingClasses = css`
   .p-14	{ padding: 3.5rem; }
   .p-16	{ padding: 4rem; }
 `;
+
+export const marginClasses = css`
+  .m-0	{ margin: 0px; }
+  .m-0.5	{ margin: 0.125rem; }
+  .m-1	{ margin: 0.25rem; }
+  .m-1.5	{ margin: 0.375rem; }
+  .m-2	{ margin: 0.5rem; }
+  .m-2.5	{ margin: 0.625rem; }
+  .m-3	{ margin: 0.75rem; }
+  .m-3.5	{ margin: 0.875rem; }
+  .m-4	{ margin: 1rem; }
+  .m-5	{ margin: 1.25rem; }
+  .m-6	{ margin: 1.5rem; }
+  .m-7	{ margin: 1.75rem; }
+  .m-8	{ margin: 2rem; }
+  .m-9	{ margin: 2.25rem; }
+  .m-10	{ margin: 2.5rem; }
+  .m-11	{ margin: 2.75rem; }
+  .m-12	{ margin: 3rem; }
+  .m-14	{ margin: 3.5rem; }
+  .m-16	{ margin: 4rem; }
+`;
+
+export const opacityClasses = css`
+  .op-0	{ opacity: 0 }
+  .op-25	{ opacity: 0.25 }
+  .op-5	{ opacity: 0.5 }
+  .op-75	{ opacity: 0.75 }
+  .op-1	{ opacity: 1 }
+`;

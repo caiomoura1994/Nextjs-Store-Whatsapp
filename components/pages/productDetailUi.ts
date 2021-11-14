@@ -60,6 +60,16 @@ const ProductContainer = styled.div`
     margin-left: 1rem;
   }
 
+  .product-sizes-button {
+    padding: 1rem;
+    margin: auto;
+    color: white;
+    text-align: center;
+    border-radius: 3rem;
+    align-self: center;
+    background-color: ${({ theme }) => theme.colors.green.light};
+  }
+
   .counter {
     align-self: center;
     div {
