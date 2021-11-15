@@ -48,7 +48,7 @@ export default function Home({ storeData }: HomeProps) {
 
   return (
     <>
-      <SEO title={storeData?.establishment_name} description={storeData?.description} />
+      <SEO title={storeData?.establishment_name} description={storeData?.description} image={storeData?.photo} />
       {show && <Modal toggleModal={toggle} openinghours={storeData?.openinghours} />}
       <Layout home>
         <StoreNavbar toggleModal={toggle} store={storeData} />
