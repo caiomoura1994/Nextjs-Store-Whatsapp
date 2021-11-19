@@ -75,7 +75,7 @@ export default function ProductPageCart({ }) {
     if (!props.thing && paymentMethod === 'money') return alert("Troco não informádo")
     if (!isPhone(props.phone)) return alert("Número de Telefone inválido.")
     if (!shippigType) return alert("Forma de entrega deve ser selecionada.")
-    const whatsappText = generateWhatsappText({ ...props, total: formatToBRL(totalCart), products, shippigType, storeData, paymentMethod })
+    const whatsappText = generateWhatsappText({ ...props, total: totalCart, products, shippigType, storeData, paymentMethod })
 
     open(`https://api.whatsapp.com/send/?phone=55${storeData.phone_number}&text=${encodeURIComponent(whatsappText)}&app_absent=0`)
   }
