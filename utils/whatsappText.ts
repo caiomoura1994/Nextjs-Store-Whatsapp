@@ -11,7 +11,7 @@ export const generateWhatsappText = ({
 
     const taxDelivery = find(storeData.delivery_tax, (o) => o.title?.toLowerCase() === props?.neigbohood?.toLowerCase());
     const taxDeliveryPrice = Number(taxDelivery?.price || 0)
-    const deliveryTaxText = taxDeliveryPrice === 0 ? '*ENDEREÇO NÃO LOCALIZADA*\n Quanto fica o frete para esse endereço ?' : `Taxa de entrega: ${formatToBRL(taxDeliveryPrice)}`
+    const deliveryTaxText = taxDeliveryPrice === 0 ? '*ENDEREÇO NÃO LOCALIZADA*' : `Taxa de entrega: ${formatToBRL(taxDeliveryPrice)}`
     const shippigText = shippigType === "pickInStore" ? "Retirada na Loja" : deliveryTaxText;
 
     const formattedAddress = `${props.street}, ${props.number} - ${props.complement}
@@ -37,7 +37,7 @@ ${obsText}${selectedFlavorsTitle}${selectedFlavorsText}${additionalsText}`;
 
 ${formattedProducts}
 
-${shippigText}
+${deliveryTaxText === '*ENDEREÇO NÃO LOCALIZADA*' ? '' : shippigText}
 
 *Total: ${formatToBRL(Number(total) + Number(taxDeliveryPrice))}*
 
@@ -50,6 +50,8 @@ ${shippigType === "address" ? formattedAddress : ""}
 ${props.thing ? `Troco para: ${props.thing}` : ""}
 ${props.paymentMethod === 'pix' ? 'Pagamento via Pix' : ""}
 ${props.paymentMethod === 'creditCard' ? 'Pagamento via Cartão' : ''}
+
+${deliveryTaxText === '*ENDEREÇO NÃO LOCALIZADA*' ? `Quanto fica o frete para esse endereço ?` : ''}
 
 Pedido gerado pelo Zeki às ${formatToDateTime(new Date())}`
 };
