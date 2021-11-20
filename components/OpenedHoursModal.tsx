@@ -3,23 +3,23 @@ import { IOpeninghour } from '../@types/store';
 
 
 interface IOpenedHoursModal {
-    toggleModal: () => void
-    openinghours: IOpeninghour[]
+  toggleModal: () => void
+  openinghours: IOpeninghour[]
 }
 const OpenedHoursModal = ({ toggleModal, openinghours }: IOpenedHoursModal) => {
-    return <OpenedHoursModalStyle>
-        <div className="container">
-            <p className="center title">Horários de Funcionamento</p>
-            {openinghours?.filter((o) => o.start_hour).map(({ start_hour, end_hour, day_of_week }) =>
-                <div className="days-hours">
-                    <span>{day_of_week}</span> <span className="hour">{`${start_hour} às ${end_hour}`}</span>
-                </div>
-            )}
+  return <OpenedHoursModalStyle>
+    <div className="container">
+      <p className="center title">Horários de Funcionamento</p>
+      {openinghours?.filter((o) => o.start_hour).map(({ start_hour, end_hour, day_of_week }) =>
+        <div className="days-hours">
+          <span>{day_of_week}</span> <span className="hour">{`${start_hour} às ${end_hour}`}</span>
         </div>
-        <div className="center ok-button gradient" onClick={toggleModal}>
-            Ok
-  </div>
-    </OpenedHoursModalStyle>
+      )}
+    </div>
+    <div className="center ok-button gradient" onClick={toggleModal}>
+      Ok
+    </div>
+  </OpenedHoursModalStyle>
 
 };
 
