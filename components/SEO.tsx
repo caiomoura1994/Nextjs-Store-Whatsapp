@@ -27,10 +27,11 @@ export default function SEO({
       <title>{pageTitle}</title>
       <link rel="canonical" href={link} />
       <meta httpEquiv="Content-Language" content="pt-br" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
+
       <meta httpEquiv="x-ua-compatible" content="IE=edge,chrome=1" />
       <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta httpEquiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="title" content="metalmilitar.com.br - Fábrica de distintivos militares" />
       {description && <meta name="description" content={description} />}
       {pageImageURL && <meta name="image" content={pageImageURL} />}

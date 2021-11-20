@@ -91,8 +91,8 @@ export default function ProductPage() {
 
   function handleWithPizzaFlavors(flavorIndex, status) {
     if (checkedFlavors.length >= flavorsQuantityLimit && !status) return;
-    if (selectedFlavors[flavorIndex].id === itemProduct.id) return;
-
+    const [,id] = itemProduct.id.split('-')
+    if (selectedFlavors[flavorIndex].id == id) return;
     const multableSelectedFlavor = produce(selectedFlavors, draftState => {
       draftState[flavorIndex].checked = !status
     })
@@ -125,11 +125,10 @@ export default function ProductPage() {
       itemProduct?.pizzaProducts?.map((product) => {
 
         const flavorIsChecked = find(itemProduct?.selectedFlavors, { id: product.id });
-        console.log('flavorIsChecked:', flavorIsChecked)
         return ({ ...product, checked: !!flavorIsChecked })
       })
     )
-  }, [itemProduct])
+  }, [])
 
   return (
     <Layout>

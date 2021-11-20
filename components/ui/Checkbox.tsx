@@ -3,7 +3,7 @@ import styled from "styled-components"
 const Styles = styled.label`
 display: block;
 position: relative;
-padding-left: 35px;
+padding-left: 1.5rem;
 margin-bottom: 1rem;
 cursor: pointer;
 font-size: 1rem;
@@ -24,11 +24,12 @@ input {
   position: absolute;
   top: 0;
   left: 0;
-  height: 1.7rem;
-  width: 1.7rem;
+  height: 1rem;
+  width: 1rem;
   /* background-color: #eee; */
   border-color:#eee;
   border: solid;
+  border-width: 1px;
   border-radius: 4px;
 }
 
@@ -49,10 +50,10 @@ input:checked ~ .checkmark:after {
 }
 
 .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
+  left: 0.3rem;
+  top: 0.2rem;
+  width: 0.2rem;
+  height: 0.4rem;
   border: solid white;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
