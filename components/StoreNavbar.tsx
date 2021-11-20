@@ -25,7 +25,7 @@ const StoreNavbar = ({ store, toggleModal }: IStoreNavbar) => {
 
     return <StoreNavbarStyles>
         {/* <div className="cover" /> */}
-        <img alt="image" className="avatar" src={store?.photo || "https://guiasalvadoronline.com.br/images/usr/227dac6da7.jpg"} />
+        {store?.photo && <img alt="image" className="avatar" src={store?.photo || "https://guiasalvadoronline.com.br/images/usr/227dac6da7.jpg"} />}
         <div className="title">
             <h1>{store?.establishment_name}</h1>
             <h2>{store?.description}</h2>

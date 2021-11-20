@@ -134,7 +134,7 @@ export default function ProductPage() {
     <Layout>
       <ProductDetailUi.ProductContainer>
         <ProductDetailUi.HeaderSection>
-          <img alt="image" src={itemProduct?.photo} />
+          {itemProduct?.photo && <img alt="image" src={itemProduct?.photo} />}
           <div>
             <h1>{itemProduct?.name}</h1>
             {/* <p>Cód: {itemProduct?.cod}</p> */}

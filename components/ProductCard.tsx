@@ -6,7 +6,7 @@ import { IProduct } from '../@types/store';
 export default function ProductCard({ name, description, price, photo, id }: IProduct) {
     return <Link href={`/product/detail/${id}`}>
         <ProductCardContainer>
-            <img alt="image" src={photo} />
+            {photo && <img alt="image" src={photo} />}
             <div className="card-body">
                 <div>
                     <p className="title">{name}</p>

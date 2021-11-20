@@ -136,7 +136,7 @@ export default function ProductPageDetail(props: IProductPageDetail) {
     <Layout goBackAction={goBackAction}>
       <ProductDetailUi.ProductContainer>
         <ProductDetailUi.HeaderSection>
-          <img alt="image" src={props.photo} />
+          {props?.photo && <img alt="image" src={props?.photo} />}
           <div>
             <h1>{props.name}</h1>
             {/* <p>Cód: {props.cod}</p> */}
