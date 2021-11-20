@@ -149,9 +149,9 @@ export default function ProductPageCart({ }) {
                 <label>Subtotal</label>
                 <label className="value">{formatToBRL(product.subTotalValue)}</label>
               </div>
-              {/* <div onClick={() => push(`product/edit/${product?.id}`)} className="edit-comment">
+              <div onClick={() => push(`product/edit/${product?.id}`)} className="edit-comment">
                 <label>Editar</label>
-              </div> */}
+              </div>
             </div>
           </CarrinhoUi.ProductCardCartContainer>
         ))

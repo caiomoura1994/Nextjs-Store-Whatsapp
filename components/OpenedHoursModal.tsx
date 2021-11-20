@@ -27,6 +27,7 @@ const OpenedHoursModalStyle = styled.div`
 border-radius: 1rem;
 width: 90%;
 background: ${({ theme }) => theme.colors.white.DEFAULT};
+z-index: 99;
 div {
   font-size: 1rem;
 }

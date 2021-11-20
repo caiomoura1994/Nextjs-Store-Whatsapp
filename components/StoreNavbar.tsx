@@ -102,6 +102,9 @@ background-position-y: 0px;
         padding: 0.2rem;
         vertical-align: 0.1rem;
         margin-left: 0.2rem;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
         /* transform: rotate(45deg); */
         /* -webkit-transform: rotate(45deg); */
     }

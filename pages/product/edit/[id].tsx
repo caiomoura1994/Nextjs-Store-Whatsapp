@@ -1,19 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatToBRL } from 'brazilian-values';
+import { find } from 'lodash';
 import { useRouter } from 'next/router'
+import classNames from 'classnames';
+import produce from 'immer';
 
 import Layout from '../../../components/layout'
 import { useCart } from "react-use-cart";
 import CheckboxUi from '../../../components/ui/Checkbox';
 import ProductDetailUi from '../../../components/pages/productDetailUi';
 
+const PIZZA_SIZES = ['LARGE', 'FAMILY']
 
 export default function ProductPage() {
-
-
   const router = useRouter()
   const { id } = router.query;
   const productId = String(id);
+  const [pizzaSizeSelected, setPizzaSizeSelected] = useState(PIZZA_SIZES[0]);
+  const flavorsQuantityLimit = PIZZA_SIZES[0] === pizzaSizeSelected ? 3 : 4;
+  const [selectedFlavors, setSelectedFlavors] = useState([]);
   const {
     updateItemQuantity,
     addItem,
@@ -22,6 +27,13 @@ export default function ProductPage() {
     removeItem
   } = useCart();
   const itemProduct = getItem(productId);
+
+  const checkedFlavors = selectedFlavors.filter(d => d.checked)
+  let productPrice = Number(itemProduct?.price);
+  if (itemProduct?.categoryIsPizza && checkedFlavors?.length > 0) {
+    const [price] = checkedFlavors?.map((d) => Number(d.price)).sort((a, b) => a - b).reverse()
+    productPrice = flavorsQuantityLimit === 3 ? price : price + 10;
+  }
 
   const [comment, setComment] = useState("");
   const [aditionals, setAditionals] = useState(itemProduct?.aditionals || []);
@@ -77,6 +89,23 @@ export default function ProductPage() {
     }
   }
 
+  function handleWithPizzaFlavors(flavorIndex, status) {
+    if (checkedFlavors.length >= flavorsQuantityLimit && !status) return;
+    if (selectedFlavors[flavorIndex].id === itemProduct.id) return;
+
+    const multableSelectedFlavor = produce(selectedFlavors, draftState => {
+      draftState[flavorIndex].checked = !status
+    })
+
+    setSelectedFlavors([...multableSelectedFlavor])
+    itemProduct && updateItem(itemProduct.id, {
+      ...itemProduct,
+      selectedFlavors: multableSelectedFlavor.filter(d => d.checked),
+      pizzaSizeSelected,
+      comment
+    })
+  }
+
 
   function handleChangeComment(event) {
     setComment(event.target.value)
@@ -85,6 +114,22 @@ export default function ProductPage() {
       comment: event.target.value
     })
   }
+
+  useEffect(() => {
+    console.log(itemProduct)
+    const storeData = JSON.parse(localStorage.getItem("storeData"))
+    setAditionals(
+      storeData?.additionals?.map((additional) => ({ ...additional, checked: false }))
+    )
+    setSelectedFlavors(
+      itemProduct?.pizzaProducts?.map((product) => {
+
+        const flavorIsChecked = find(itemProduct?.selectedFlavors, { id: product.id });
+        console.log('flavorIsChecked:', flavorIsChecked)
+        return ({ ...product, checked: !!flavorIsChecked })
+      })
+    )
+  }, [itemProduct])
 
   return (
     <Layout>
@@ -97,6 +142,31 @@ export default function ProductPage() {
             <p>{itemProduct?.description}</p>
           </div>
         </ProductDetailUi.HeaderSection>
+        {itemProduct?.categoryIsPizza && <>
+          <div className="flex m-3">
+            {PIZZA_SIZES.map((size) => {
+              const isSelectedSize = size === pizzaSizeSelected;
+              const buttonClassName = classNames('product-sizes-button', { gradient: isSelectedSize, 'op-5': !isSelectedSize })
+              return <div
+                onClick={() => setPizzaSizeSelected(size)}
+                className={buttonClassName}
+              >
+                {/* {size === PIZZA_SIZES[0] && '6 Fatias'} */}
+                {size === PIZZA_SIZES[0] && '8 Fatias'}
+                {size === PIZZA_SIZES[1] && '12 Fatias'}
+              </div>
+            })}
+          </div>
+          <div className="section-title">Escolha até {flavorsQuantityLimit} sabores</div>
+          <section>
+            {flavorsQuantityLimit && selectedFlavors?.map((pizzaProduct, idx) => <CheckboxUi
+              onClick={() => handleWithPizzaFlavors(idx, pizzaProduct.checked)}
+              text={`${pizzaProduct.name} | ${formatToBRL(flavorsQuantityLimit === 3 ? pizzaProduct.price : Number(pizzaProduct.price) + 10)}`}
+              isChecked={pizzaProduct.checked}
+            />)}
+          </section>
+        </>
+        }
         <div className="section-title">Adicionais</div>
         <section>
           {aditionals?.map((ad, index) => {
@@ -124,7 +194,7 @@ export default function ProductPage() {
               </div>
             </div>
             <div onClick={addToCard} className="gradient add-button">
-              Total {formatToBRL((itemProduct?.quantity || 0) * (sumAdditionals + Number(itemProduct?.price)))}
+              Total {formatToBRL((itemProduct?.quantity || 0) * (sumAdditionals + productPrice))}
             </div>
           </ProductDetailUi.ActionContainer>
         </section>
