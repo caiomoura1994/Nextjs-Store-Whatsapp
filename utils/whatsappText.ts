@@ -51,7 +51,8 @@ ${props.thing ? `Troco para: ${props.thing}` : ""}
 ${props.paymentMethod === 'pix' ? 'Pagamento via Pix' : ""}
 ${props.paymentMethod === 'creditCard' ? 'Pagamento via Cartão' : ''}
 
-${deliveryTaxText === '*ENDEREÇO NÃO LOCALIZADA*' && shippigType !== "pickInStore"  ? `Quanto fica o frete para esse endereço ?` : ''}
+${deliveryTaxText === '*ENDEREÇO NÃO LOCALIZADA*' && shippigType !== "pickInStore" ? `Quanto fica o frete para esse endereço ?` : ''}
+${shippigType === "pickInStore" ? 'Retirada na Loja' : ''}
 
 Pedido gerado pelo Zeki às ${formatToDateTime(new Date())}`
 };
