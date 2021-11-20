@@ -52,7 +52,7 @@ ${props.paymentMethod === 'pix' ? 'Pagamento via Pix' : ""}
 ${props.paymentMethod === 'creditCard' ? 'Pagamento via Cartão' : ''}
 
 ${deliveryTaxText === '*ENDEREÇO NÃO LOCALIZADA*' && shippigType !== "pickInStore" ? `Quanto fica o frete para esse endereço ?` : ''}
-${shippigType === "pickInStore" ? 'Retirada na Loja' : ''}
+${shippigType === "pickInStore" ? 'Retirada na Loja, Pedido confirmado ?\nEm quanto tempo posso ir buscar ?' : ''}
 
 Pedido gerado pelo Zeki às ${formatToDateTime(new Date())}`
 };
