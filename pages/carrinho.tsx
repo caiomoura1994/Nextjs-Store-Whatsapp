@@ -14,6 +14,7 @@ import ViaCep from '../services/ViaCep';
 import Input from '../components/ui/Input';
 import { generateWhatsappText } from '../utils/whatsappText';
 import { IStore } from '../@types/store';
+import OrderApi from '../services/OrderApi';
 
 export default function ProductPageCart({ }) {
 
@@ -30,7 +31,8 @@ export default function ProductPageCart({ }) {
     updateItemQuantity,
     getItem,
     removeItem,
-    isEmpty
+    isEmpty,
+    emptyCart
   } = useCart();
   const formContext = useForm();
 
@@ -69,15 +71,34 @@ export default function ProductPageCart({ }) {
     updateItemQuantity(productId, itemProduct?.quantity + 1)
   }
 
-  function sendWhatsappMessage(props) {
-    console.log('props', props)
+  async function sendWhatsappMessage(props) {
+    console.log('props', props);
     if (!paymentMethod) return alert("Forma de pagamento inválida.")
     if (!props.thing && paymentMethod === 'money') return alert("Troco não informádo")
     if (!isPhone(props.phone)) return alert("Número de Telefone inválido.")
     if (!shippigType) return alert("Forma de entrega deve ser selecionada.")
-    const whatsappText = generateWhatsappText({ ...props, total: totalCart, products, shippigType, storeData, paymentMethod })
+    const generateTextPayload = { ...props, total: totalCart, products, shippigType, storeData, paymentMethod }
+    const {
+      totalWithDelivery,
+      textMessage,
+      formattedAddress
+    } = generateWhatsappText(generateTextPayload);
 
-    open(`https://api.whatsapp.com/send/?phone=55${storeData.phone_number}&text=${encodeURIComponent(whatsappText)}&app_absent=0`)
+    const newOrderPayload = {
+      "store": storeData.id,
+      "order_details": generateTextPayload,
+      "total": totalWithDelivery,
+      "address": formattedAddress,
+      "client_name": props.name,
+      "phone": storeData.phone_number,
+    };
+    try {
+      await OrderApi.create(newOrderPayload);
+    } catch (error) {
+      console.error('error', error);
+    }
+    open(`https://api.whatsapp.com/send/?phone=55${storeData.phone_number}&text=${encodeURIComponent(textMessage)}&app_absent=0`)
+    emptyCart();
   }
 
   async function requestViaCep(cepParam) {

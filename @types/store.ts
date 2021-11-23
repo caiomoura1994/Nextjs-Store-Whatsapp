@@ -21,6 +21,17 @@ export interface IProduct {
     categories: number[] & ICategory[];
 }
 
+export interface IOrder {
+    id: number;
+    store: number;
+    order_details: any;
+    total: number;
+    status: string;
+    address: string;
+    client_name: string;
+    phone: string;
+}
+
 export interface IAditional {
     id: number;
     description: string;

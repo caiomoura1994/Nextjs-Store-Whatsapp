@@ -31,28 +31,33 @@ ${props.cep}`;
         return `*${product.quantity}x ${product.name} ${formatToBRL(product.price)}*
 ${obsText}${selectedFlavorsTitle}${selectedFlavorsText}${additionalsText}`;
     }).join('\n\n');
+    const totalWithDelivery = Number(total) + Number(taxDeliveryPrice)
 
-    return `*Pedido Zeki* - ${storeData.establishment_name}
----------------------------------------
-
-${formattedProducts}
-
-${deliveryTaxText === '*ENDEREÇO NÃO LOCALIZADA*' ? '' : shippigText}
-
-*Total: ${formatToBRL(Number(total) + Number(taxDeliveryPrice))}*
-
----------------------------------------
-*${props.name}*
-${props.phone}
-
-${shippigType === "address" ? formattedAddress : ""}
-
-${props.thing ? `Troco para: ${props.thing}` : ""}
-${props.paymentMethod === 'pix' ? 'Pagamento via Pix' : ""}
-${props.paymentMethod === 'creditCard' ? 'Pagamento via Cartão' : ''}
-
-${deliveryTaxText === '*ENDEREÇO NÃO LOCALIZADA*' && shippigType !== "pickInStore" ? `Quanto fica o frete para esse endereço ?` : ''}
-${shippigType === "pickInStore" ? 'Retirada na Loja, Pedido confirmado ?\nEm quanto tempo posso ir buscar ?' : ''}
-
-Pedido gerado pelo Zeki às ${formatToDateTime(new Date())}`
+    return {
+        totalWithDelivery,
+        formattedAddress,
+        textMessage: `*Pedido Zeki* - ${storeData.establishment_name}
+       ---------------------------------------
+       
+       ${formattedProducts}
+       
+       ${deliveryTaxText === '*ENDEREÇO NÃO LOCALIZADA*' ? '' : shippigText}
+       
+       *Total: ${formatToBRL(totalWithDelivery)}*
+       
+       ---------------------------------------
+       *${props.name}*
+       ${props.phone}
+       
+       ${shippigType === "address" ? formattedAddress : ""}
+       
+       ${props.thing ? `Troco para: ${props.thing}` : ""}
+       ${props.paymentMethod === 'pix' ? 'Pagamento via Pix' : ""}
+       ${props.paymentMethod === 'creditCard' ? 'Pagamento via Cartão' : ''}
+       
+       ${deliveryTaxText === '*ENDEREÇO NÃO LOCALIZADA*' && shippigType !== "pickInStore" ? `Quanto fica o frete para esse endereço ?` : ''}
+       ${shippigType === "pickInStore" ? 'Retirada na Loja, Pedido confirmado ?\nEm quanto tempo posso ir buscar ?' : ''}
+       
+       Pedido gerado pelo Zeki às ${formatToDateTime(new Date())}`
+    }
 };
