@@ -97,8 +97,9 @@ export default function ProductPageCart({ }) {
     } catch (error) {
       console.error('error', error);
     }
-    open(`https://api.whatsapp.com/send/?phone=55${storeData.phone_number}&text=${encodeURIComponent(textMessage)}&app_absent=0`)
-    emptyCart();
+    const redirected = open(`https://api.whatsapp.com/send/?phone=55${storeData.phone_number}&text=${encodeURIComponent(textMessage)}&app_absent=0`)
+    if (redirected) emptyCart();
+
   }
 
   async function requestViaCep(cepParam) {

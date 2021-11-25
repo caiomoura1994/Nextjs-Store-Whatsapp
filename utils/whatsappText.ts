@@ -15,7 +15,7 @@ export const generateWhatsappText = ({
     const shippigText = shippigType === "pickInStore" ? "Retirada na Loja" : deliveryTaxText;
 
     const formattedAddress = `${props.street}, ${props.number} - ${props.complement}
-${props.neigbohood}, ${props.city}/${props.uf}
+${props.neigbohood}, ${props.city}${props.uf ? `/${props.uf}` : ''}
 ${props.cep}`;
 
     const formattedProducts = products.map((product) => {
