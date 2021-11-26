@@ -92,14 +92,9 @@ export default function ProductPageCart({ }) {
       "client_name": props.name,
       "phone": storeData.phone_number,
     };
-    try {
-      await OrderApi.create(newOrderPayload);
-    } catch (error) {
-      console.error('error', error);
-    }
-    const redirected = open(`https://api.whatsapp.com/send/?phone=55${storeData.phone_number}&text=${encodeURIComponent(textMessage)}&app_absent=0`)
-    if (redirected) emptyCart();
-
+    open(`https://api.whatsapp.com/send/?phone=55${storeData.phone_number}&text=${encodeURIComponent(textMessage)}&app_absent=0`)
+    await OrderApi.create(newOrderPayload);
+    emptyCart();
   }
 
   async function requestViaCep(cepParam) {
